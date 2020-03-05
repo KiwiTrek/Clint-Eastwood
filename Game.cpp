@@ -59,6 +59,26 @@ bool Game::Init() {
 			return false;
 		}
 	}
+	flags = 0;
 
 	return true;
+}
+
+
+bool Game::Input(){}
+
+
+bool Game::Logic() {
+	return false;
+}
+
+
+void Game::Render(){
+}
+
+
+void Game::CleanUp() {
+	Mix_Quit();
+	IMG_Quit();
+	SDL_Quit();
 }

@@ -19,7 +19,6 @@ class Game
 {
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
-
 public:
 	Game();
 	~Game();
