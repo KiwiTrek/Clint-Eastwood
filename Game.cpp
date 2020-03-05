@@ -3,6 +3,11 @@
 Game::Game() {};
 Game::~Game() {};
 
+bool intro = true;
+//Used to make the title
+SDL_Surface* title = NULL;
+SDL_Texture* texture = NULL;
+
 bool Game::Init() {
 	int flags = 0;
 	
@@ -21,6 +26,9 @@ bool Game::Init() {
 		WINDOW_WIDTH,
 		WINDOW_HEIGHT,
 		SDL_WINDOW_SHOWN);
+
+	windowSurface = SDL_GetWindowSurface(window);  //Creates surface
+
 	if (window == NULL) {
 		std::cout << "Window: Could not initialize. Error: " << SDL_GetError() << std::endl;
 		return false;
@@ -65,7 +73,8 @@ bool Game::Init() {
 }
 
 
-bool Game::Input(){}
+
+//bool Game::Input(){}  //No dejaba iniciar porque no devuelve nada, asi que lo comento por ahora -Luce
 
 
 bool Game::Logic() {
@@ -73,7 +82,62 @@ bool Game::Logic() {
 }
 
 
-void Game::Render(){
+void Game::Render()
+{
+	//SDL_RenderPresent(renderer);
+	SDL_UpdateWindowSurface(window); //Temporary
+}
+
+
+//Intro
+bool Game::introScreen()
+{
+	//Title
+	title= IMG_Load("VolleyMasters.png");
+	texture = SDL_CreateTextureFromSurface(renderer, title);
+	SDL_Rect titleCard = { 200, 200, 400, 200 };
+
+	//Fill background
+	SDL_FillRect(windowSurface, NULL, SDL_MapRGB(windowSurface->format, 0xBB, 0xFF, 0xFF));
+
+	//Create rectangles
+	SDL_Rect leftRect[3];
+	SDL_Rect rightRect[3];
+	for (int i = 0; i < 3; i++)
+	{
+
+		leftRect[i] = { -WINDOW_WIDTH, 100 + i * 50, WINDOW_WIDTH, 20 };
+		rightRect[i] = { WINDOW_WIDTH, 400 + i * 50, WINDOW_WIDTH, 20 };
+		
+	}
+
+	//Animation, I guess
+	for (int i = 0; i < WINDOW_WIDTH; i++)
+	{
+
+		for (int i = 0; i < 3; i++)
+		{
+			leftRect[i].x++;
+			rightRect[i].x--;
+
+			SDL_FillRect(windowSurface, &leftRect[i], SDL_MapRGB(windowSurface->format, 0xFF, 0xFF, 0xFF));
+			SDL_FillRect(windowSurface, &rightRect[i], SDL_MapRGB(windowSurface->format, 0xFF, 0xFF, 0xFF));
+		}
+		
+		Render();
+	}
+
+	SDL_RenderCopy(renderer, texture, NULL, &titleCard);
+	//SDL_RenderPresent(renderer);
+
+	while (intro == true)
+	{
+		
+
+		
+	}
+
+	return intro;
 }
 
 

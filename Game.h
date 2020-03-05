@@ -15,19 +15,22 @@
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 960
 
+
+
 class Game
 {
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
+	SDL_Surface* windowSurface = nullptr;
 public:
 	Game();
-	~Game();
+	~Game();	
 
 	bool Init();		//Initialize Subsystems
 	
-	bool Input();
+	//bool Input();
 	bool Logic();
+	bool introScreen(); //Creates intro screen
 	void Render();		//The render copies
-
 	void CleanUp();		//Close subsystems
 };
