@@ -21,11 +21,15 @@ bool Game::Init() {
 		WINDOW_WIDTH,
 		WINDOW_HEIGHT,
 		SDL_WINDOW_SHOWN);
-
-	windowSurface = SDL_GetWindowSurface(window);  //Creates surface
-
 	if (window == NULL) {
 		std::cout << "Window: Could not initialize. Error: " << SDL_GetError() << std::endl;
+		return false;
+	}
+
+	//Surface
+	windowSurface = SDL_GetWindowSurface(window); 
+	if (windowSurface == NULL) {
+		std::cout << "Window Surface: Could not initialize. Error: " << SDL_GetError() << std::endl;
 		return false;
 	}
 
@@ -63,6 +67,12 @@ bool Game::Init() {
 		}
 	}
 	flags = 0;
+
+	//////////////
+	//Load media//
+	//////////////
+
+	//Title Screen
 	title = IMG_Load("Resources/VolleyMasters.png");
 	truth = IMG_Load("Resources/Truth.png");
 	enterToStart = IMG_Load("Resources/EnterToStart.png");
@@ -72,6 +82,8 @@ bool Game::Init() {
 	textureTruth = SDL_CreateTextureFromSurface(renderer, truth);
 	textureEnterToStart = SDL_CreateTextureFromSurface(renderer, enterToStart);
 	textureLogo = SDL_CreateTextureFromSurface(renderer, logo);
+
+	//Game
 	return true;
 }
 
@@ -120,7 +132,13 @@ bool Game::introScreen() {
 	SDL_RenderPresent(renderer);
 	SDL_Delay(500);
 
-	while (intro)
+	/*Puede que esto cause problemas con input, ya que como no 
+	puede llegar a game.Input nunca debido a como está hecho el loop del main,
+	no puede volverse false. Básicamente,
+	Ahora mismo esto es un loop infinito.
+
+	Needs checkup*/
+	while (intro)			
 	{
 		
 		//Makes "Press enter to start appear and disappear"
@@ -145,7 +163,9 @@ bool Game::introScreen() {
 	return true;
 }
 
-//bool Game::Input(){}  //No dejaba iniciar porque no devuelve nada, asi que lo comento por ahora -Luce
+bool Game::Input(){
+	return false;
+}
 
 
 bool Game::Logic() {
