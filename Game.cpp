@@ -3,11 +3,6 @@
 Game::Game() {};
 Game::~Game() {};
 
-bool intro = true;
-//Used to make the title
-SDL_Surface* title = NULL;
-SDL_Texture* texture = NULL;
-
 bool Game::Init() {
 	int flags = 0;
 	
@@ -68,11 +63,120 @@ bool Game::Init() {
 		}
 	}
 	flags = 0;
-
+	title = IMG_Load("Resources/VolleyMasters.png");
+	texture = SDL_CreateTextureFromSurface(renderer, title);
 	return true;
 }
 
+bool Game::introScreen() {
+	//Fill background
+	SDL_SetRenderDrawColor(renderer, 0xBB, 0xFF, 0xFF, 1);
+	SDL_RenderFillRect(renderer, NULL);
 
+	//Create rectangles
+	SDL_Rect cardRects[13];
+	SDL_Rect leftRect[3];
+	SDL_Rect rightRect[3];
+
+	for (int i = 0; i < 13; i++)
+	{
+		cardRects[i] = {120 * i,0 , 120 ,235 };
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+
+		leftRect[i] = { -WINDOW_WIDTH, 100 + i * 50, WINDOW_WIDTH, 20 };
+		rightRect[i] = { WINDOW_WIDTH, 400 + i * 50, WINDOW_WIDTH, 20 };
+
+	}
+
+	//Animation, I guess
+	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 1);
+	for (int i = 0; i < WINDOW_WIDTH; i++)
+	{
+		titleCard.x = i;
+		for (int i = 0; i < 3; i++)
+		{
+			leftRect[i].x++;
+			rightRect[i].x--;
+
+			SDL_RenderDrawRect(renderer, &leftRect[i]);
+			SDL_RenderDrawRect(renderer, &rightRect[i]);
+		}
+
+		if (i == titleCard.w * 1 - 50)
+		{
+			SDL_RenderCopy(renderer, texture, &cardRects[0], &titleCard);
+		}
+
+		if (i == titleCard.w * 2 - 50)
+		{
+			SDL_RenderCopy(renderer, texture, &cardRects[1], &titleCard);
+		}
+
+		if (i == titleCard.w * 3 - 50)
+		{
+			SDL_RenderCopy(renderer, texture, &cardRects[2], &titleCard);
+		}
+
+		if (i == titleCard.w * 4 - 50)
+		{
+			SDL_RenderCopy(renderer, texture, &cardRects[3], &titleCard);
+		}
+
+		if (i == titleCard.w * 5 - 50)
+		{
+			SDL_RenderCopy(renderer, texture, &cardRects[4], &titleCard);
+		}
+
+		if (i == titleCard.w * 6 - 50)
+		{
+			SDL_RenderCopy(renderer, texture, &cardRects[5], &titleCard);
+		}
+
+		if (i == titleCard.w * 7 - 50)
+		{
+			SDL_RenderCopy(renderer, texture, &cardRects[6], &titleCard);
+		}
+
+		if (i == titleCard.w * 8 - 50)
+		{
+			SDL_RenderCopy(renderer, texture, &cardRects[7], &titleCard);
+		}
+
+		if (i == titleCard.w * 9 - 50)
+		{
+			SDL_RenderCopy(renderer, texture, &cardRects[8], &titleCard);
+		}
+
+		if (i == titleCard.w *10 - 50)
+		{
+			SDL_RenderCopy(renderer, texture, &cardRects[9], &titleCard);
+		}
+
+		if (i == titleCard.w *11 - 50)
+		{
+			SDL_RenderCopy(renderer, texture, &cardRects[10], &titleCard);
+		}
+
+		if (i == titleCard.w *12 - 50)
+		{
+			SDL_RenderCopy(renderer, texture, &cardRects[11], &titleCard);
+		}
+
+		if (i == titleCard.w*13 - 50)
+		{
+			SDL_RenderCopy(renderer, texture, &cardRects[12], &titleCard);
+		}
+
+		SDL_RenderPresent(renderer);
+	}
+
+	//SDL_RenderCopy(renderer, texture, NULL, &titleCard);
+	SDL_RenderPresent(renderer);
+	return true;
+}
 
 //bool Game::Input(){}  //No dejaba iniciar porque no devuelve nada, asi que lo comento por ahora -Luce
 
@@ -84,60 +188,7 @@ bool Game::Logic() {
 
 void Game::Render()
 {
-	//SDL_RenderPresent(renderer);
-	SDL_UpdateWindowSurface(window); //Temporary
-}
 
-
-//Intro
-bool Game::introScreen()
-{
-	//Title
-	title= IMG_Load("VolleyMasters.png");
-	texture = SDL_CreateTextureFromSurface(renderer, title);
-	SDL_Rect titleCard = { 200, 200, 400, 200 };
-
-	//Fill background
-	SDL_FillRect(windowSurface, NULL, SDL_MapRGB(windowSurface->format, 0xBB, 0xFF, 0xFF));
-
-	//Create rectangles
-	SDL_Rect leftRect[3];
-	SDL_Rect rightRect[3];
-	for (int i = 0; i < 3; i++)
-	{
-
-		leftRect[i] = { -WINDOW_WIDTH, 100 + i * 50, WINDOW_WIDTH, 20 };
-		rightRect[i] = { WINDOW_WIDTH, 400 + i * 50, WINDOW_WIDTH, 20 };
-		
-	}
-
-	//Animation, I guess
-	for (int i = 0; i < WINDOW_WIDTH; i++)
-	{
-
-		for (int i = 0; i < 3; i++)
-		{
-			leftRect[i].x++;
-			rightRect[i].x--;
-
-			SDL_FillRect(windowSurface, &leftRect[i], SDL_MapRGB(windowSurface->format, 0xFF, 0xFF, 0xFF));
-			SDL_FillRect(windowSurface, &rightRect[i], SDL_MapRGB(windowSurface->format, 0xFF, 0xFF, 0xFF));
-		}
-		
-		Render();
-	}
-
-	SDL_RenderCopy(renderer, texture, NULL, &titleCard);
-	//SDL_RenderPresent(renderer);
-
-	while (intro == true)
-	{
-		
-
-		
-	}
-
-	return intro;
 }
 
 

@@ -22,6 +22,13 @@ class Game
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 	SDL_Surface* windowSurface = nullptr;
+
+	//Used to make the title
+
+	SDL_Surface* title = NULL;
+	SDL_Texture* texture = NULL;
+	SDL_Rect titleCard = { 0, 200, 100, 235 };
+
 public:
 	Game();
 	~Game();	
@@ -29,8 +36,11 @@ public:
 	bool Init();		//Initialize Subsystems
 	
 	//bool Input();
-	bool Logic();
 	bool introScreen(); //Creates intro screen
+	bool intro = true;
+
+	bool Logic();
 	void Render();		//The render copies
+
 	void CleanUp();		//Close subsystems
 };

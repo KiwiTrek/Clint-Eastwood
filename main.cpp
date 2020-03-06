@@ -5,16 +5,15 @@ int main(int argc, char* argv[]) {
 	if (!game.Init()) return -1;
 
 	bool quit = false;
-	
-	while (!quit)
-	{
+	if (game.introScreen()) {
+		while (!quit)
+		{
 
-		quit = game.Logic();
-		game.introScreen();
-		game.Render();
-		
+			quit = game.Logic();
+			if (!game.intro) { game.Render(); }   //Game intro, the game itself
+
+		}
 	}
-
 	game.CleanUp();
 	return 0;
 }
