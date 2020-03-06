@@ -67,6 +67,7 @@ public:
 
 	bool Logic();		//Aquí iría todo lo relacionado con la física, la AI, saltos, QTE, etc.
 	void Render();		//Los render copies, los sonidos, las animaciones...
+						//Para probar Logic sobretodo movimiento, haced "SDL_RenderSetDrawColor" y "SDL_RenderFillRect" para los placeholders.
 	
 	//Incluso si son de otras clases, todo se debería de hacer aquí
 	//Sí no queréis llenar el código de mucho, siempre se puede crear una función para la clase e invocarla en el Logic/Render
