@@ -64,7 +64,14 @@ bool Game::Init() {
 	}
 	flags = 0;
 	title = IMG_Load("Resources/VolleyMasters.png");
+	truth = IMG_Load("Resources/Truth.png");
+	enterToStart = IMG_Load("Resources/EnterToStart.png");
+	logo = IMG_Load("Resources/logo.png");
+
 	texture = SDL_CreateTextureFromSurface(renderer, title);
+	textureTruth = SDL_CreateTextureFromSurface(renderer, truth);
+	textureEnterToStart = SDL_CreateTextureFromSurface(renderer, enterToStart);
+	textureLogo = SDL_CreateTextureFromSurface(renderer, logo);
 	return true;
 }
 
@@ -74,107 +81,67 @@ bool Game::introScreen() {
 	SDL_RenderFillRect(renderer, NULL);
 
 	//Create rectangles
-	SDL_Rect cardRects[13];
-	SDL_Rect leftRect[3];
-	SDL_Rect rightRect[3];
-
-	for (int i = 0; i < 13; i++)
-	{
-		cardRects[i] = {120 * i,0 , 120 ,235 };
-	}
+	SDL_Rect cardRects[WINDOW_WIDTH];
+	SDL_Rect leftRect[6];
+	SDL_Rect coverUp = { 540,800,200,75 };
+	
 
 	for (int i = 0; i < 3; i++)
 	{
-
 		leftRect[i] = { -WINDOW_WIDTH, 100 + i * 50, WINDOW_WIDTH, 20 };
-		rightRect[i] = { WINDOW_WIDTH, 400 + i * 50, WINDOW_WIDTH, 20 };
-
+	}
+	for (int i = 3; i < 6; i++)
+	{
+		leftRect[i] = { -WINDOW_WIDTH, 250 + i * 50, WINDOW_WIDTH, 20 };
 	}
 
-	//Animation, I guess
+	//Animation, I guess (And music, too :/)
 	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 1);
+	introMusic = Mix_LoadMUS("Resources/Intro.wav");
+	Mix_PlayMusic(introMusic, 1);
 	for (int i = 0; i < WINDOW_WIDTH; i++)
 	{
 		titleCard.x = i;
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 6; i++)
 		{
 			leftRect[i].x++;
-			rightRect[i].x--;
 
 			SDL_RenderDrawRect(renderer, &leftRect[i]);
-			SDL_RenderDrawRect(renderer, &rightRect[i]);
 		}
+		cardRects[i] = { -55 + i,0,1,235 };
 
-		if (i == titleCard.w * 1 - 50)
-		{
-			SDL_RenderCopy(renderer, texture, &cardRects[0], &titleCard);
-		}
-
-		if (i == titleCard.w * 2 - 50)
-		{
-			SDL_RenderCopy(renderer, texture, &cardRects[1], &titleCard);
-		}
-
-		if (i == titleCard.w * 3 - 50)
-		{
-			SDL_RenderCopy(renderer, texture, &cardRects[2], &titleCard);
-		}
-
-		if (i == titleCard.w * 4 - 50)
-		{
-			SDL_RenderCopy(renderer, texture, &cardRects[3], &titleCard);
-		}
-
-		if (i == titleCard.w * 5 - 50)
-		{
-			SDL_RenderCopy(renderer, texture, &cardRects[4], &titleCard);
-		}
-
-		if (i == titleCard.w * 6 - 50)
-		{
-			SDL_RenderCopy(renderer, texture, &cardRects[5], &titleCard);
-		}
-
-		if (i == titleCard.w * 7 - 50)
-		{
-			SDL_RenderCopy(renderer, texture, &cardRects[6], &titleCard);
-		}
-
-		if (i == titleCard.w * 8 - 50)
-		{
-			SDL_RenderCopy(renderer, texture, &cardRects[7], &titleCard);
-		}
-
-		if (i == titleCard.w * 9 - 50)
-		{
-			SDL_RenderCopy(renderer, texture, &cardRects[8], &titleCard);
-		}
-
-		if (i == titleCard.w *10 - 50)
-		{
-			SDL_RenderCopy(renderer, texture, &cardRects[9], &titleCard);
-		}
-
-		if (i == titleCard.w *11 - 50)
-		{
-			SDL_RenderCopy(renderer, texture, &cardRects[10], &titleCard);
-		}
-
-		if (i == titleCard.w *12 - 50)
-		{
-			SDL_RenderCopy(renderer, texture, &cardRects[11], &titleCard);
-		}
-
-		if (i == titleCard.w*13 - 50)
-		{
-			SDL_RenderCopy(renderer, texture, &cardRects[12], &titleCard);
-		}
-
+		SDL_RenderCopy(renderer, texture, &cardRects[i], &titleCard);
 		SDL_RenderPresent(renderer);
 	}
 
-	//SDL_RenderCopy(renderer, texture, NULL, &titleCard);
+	SDL_Delay(700);
+	SDL_RenderCopy(renderer, textureTruth, NULL, &truthCard);
+	SDL_RenderCopy(renderer, textureLogo, NULL, &logoCard);
 	SDL_RenderPresent(renderer);
+	SDL_Delay(500);
+
+	while (intro)
+	{
+		
+		//Makes "Press enter to start appear and disappear"
+		if (present)
+		{
+			SDL_RenderCopy(renderer, textureEnterToStart, NULL, &enterToStartCard);
+			present = false;
+		}
+		else
+		{
+			SDL_SetRenderDrawColor(renderer, 0xBB, 0xFF, 0xFF, 1);
+			SDL_RenderFillRect(renderer, &coverUp);
+			SDL_RenderDrawRect(renderer, &coverUp);
+			present = true;
+		}
+		SDL_RenderPresent(renderer);
+		SDL_Delay(700);
+	}
+
+
+
 	return true;
 }
 

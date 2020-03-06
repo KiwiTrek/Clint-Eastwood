@@ -23,11 +23,26 @@ class Game
 	SDL_Renderer* renderer = nullptr;
 	SDL_Surface* windowSurface = nullptr;
 
-	//Used to make the title
+	//Used to make the title, and subtitle, and intro music, and other cool shit :^)
 
 	SDL_Surface* title = NULL;
+	SDL_Surface* truth = NULL;
+	SDL_Surface* enterToStart = NULL;
+	SDL_Surface* logo = NULL;
+
 	SDL_Texture* texture = NULL;
-	SDL_Rect titleCard = { 0, 200, 100, 235 };
+	SDL_Texture* textureTruth = NULL;
+	SDL_Texture* textureEnterToStart = NULL;
+	SDL_Texture* textureLogo = NULL;
+
+	SDL_Rect titleCard = { 0,200,1,235 };
+	SDL_Rect truthCard = { 100,550,1080,75 };
+	SDL_Rect enterToStartCard = { 540,800,200,75 };
+	SDL_Rect logoCard = { 1205,885,75,75 };
+
+	Mix_Music* introMusic = NULL;
+
+	bool present = true; //Aids the press enter to star thing
 
 public:
 	Game();
