@@ -19,7 +19,7 @@ public:
 	void setHeight(int HEIGHT);
 	void setSpeedX(int SPEEDX);
 	void setSpeedY(int SPEEDY);
-	void physics(Entity e, int WW, int WH);
+	void physics(Entity &e, int WW, int WH);
 
 	void getRect(int* x, int* y, int* width, int* height);
 private:
@@ -28,6 +28,6 @@ private:
 	int y = 0;
 	int width = 1;
 	int height = 1;
-	int speedX = 0;
-	int speedY = 0;
+	int speedX = 1;
+	int speedY = 1;
 };

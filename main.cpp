@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
 			if (!game.intro) { 
 				game.Logic();			//Hace la lógica del juego
 				game.Render(); }		//Hace el render
-
+			SDL_Delay(10);
 		}
 	}
 	game.CleanUp();						//Cierra todo

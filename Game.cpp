@@ -83,12 +83,18 @@ bool Game::Init() {
 	textureEnterToStart = SDL_CreateTextureFromSurface(renderer, enterToStart);
 	textureLogo = SDL_CreateTextureFromSurface(renderer, logo);
 
-	test.setX(100);
-	test.setY(100);
-	test.setWidth(100);
-	test.setHeight(100);
-	test.setSpeedX(0);
-	test.setSpeedY(0);
+	ball1.setX(100);
+	ball1.setY(100);
+	ball1.setWidth(100);
+	ball1.setHeight(100);
+	ball1.setSpeedX(10);
+	ball1.setSpeedY(10);
+	ball2.setX(1000);
+	ball2.setY(100);
+	ball2.setWidth(100);
+	ball2.setHeight(100);
+	ball2.setSpeedX(10);
+	ball2.setSpeedY(10);
 
 	//Game
 	return true;
@@ -230,8 +236,6 @@ bool Game::introScreen() {
 
 
 bool Game::Logic() {
-	test.physics(test, WINDOW_WIDTH, WINDOW_HEIGHT);
-
 	ball1.physics(ball1, WINDOW_WIDTH, WINDOW_HEIGHT);
 	ball2.physics(ball2, WINDOW_WIDTH, WINDOW_HEIGHT);
 	return false;
@@ -251,21 +255,14 @@ void Game::Render()
 
 	//Temporal Balls
 	
-	SDL_Rect ball1;
-	ball1.h = 100;
-	ball1.w = 100;
-	ball1.x = 200;
-	ball1.y = 200;
-
-	test.getRect(&ball1.x, &ball1.y, &ball1.w, &ball1.h);
-	SDL_Rect ball2;
-	test.getRect(&ball2.x, &ball2.y, &ball2.w, &ball2.h);
-
-	ball2.x += WINDOW_WIDTH / 4;
+	SDL_Rect ball1_Rect;
+	ball1.getRect(&ball1_Rect.x, &ball1_Rect.y, &ball1_Rect.w, &ball1_Rect.h);
+	SDL_Rect ball2_Rect;
+	ball2.getRect(&ball2_Rect.x, &ball2_Rect.y, &ball2_Rect.w, &ball2_Rect.h);
 	
 	SDL_SetRenderDrawColor(renderer, 0xFE, 0xFE, 0xFE, 1);
-	SDL_RenderFillRect(renderer, &ball1);
-	SDL_RenderFillRect(renderer, &ball2);
+	SDL_RenderFillRect(renderer, &ball1_Rect);
+	SDL_RenderFillRect(renderer, &ball2_Rect);
 
 	SDL_RenderPresent(renderer);
 }

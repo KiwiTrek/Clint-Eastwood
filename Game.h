@@ -51,7 +51,6 @@ class Game
 	bool present = true; //Aids the press enter to start thing
 	/////////////////////////////////////////////////////////////////////////////
 	//	MAIN GAME
-	Entity test;
 	Entity ball1;
 	Entity ball2;
 
