@@ -87,14 +87,14 @@ bool Game::Init() {
 	ball1.setY(100);
 	ball1.setWidth(100);
 	ball1.setHeight(100);
-	ball1.setSpeedX(10);
-	ball1.setSpeedY(10);
+	ball1.setSpeedX(150);
+	ball1.setSpeedY(150);
 	ball2.setX(1000);
 	ball2.setY(100);
 	ball2.setWidth(100);
 	ball2.setHeight(100);
-	ball2.setSpeedX(10);
-	ball2.setSpeedY(10);
+	ball2.setSpeedX(-150);
+	ball2.setSpeedY(150);
 
 	//Game
 	return true;
