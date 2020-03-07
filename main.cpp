@@ -11,7 +11,7 @@ int main(int argc, char* argv[]) {
 		while (!quit)
 		{
 
-			quit = game.Input();		//Hace los inputs del juego
+			quit = game.Update();		//Hace los inputs del juego
 			if (!game.intro) { 
 				game.Logic();			//Hace la lógica del juego
 				game.Render(); }		//Hace el render

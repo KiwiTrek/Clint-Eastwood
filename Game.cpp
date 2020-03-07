@@ -94,6 +94,46 @@ bool Game::Init() {
 	return true;
 }
 
+
+bool Game::Input() {
+
+	SDL_Event event;
+	if (SDL_PollEvent(&event))
+	{
+		if (event.type == SDL_QUIT)	return false;
+	}
+
+	SDL_PumpEvents();
+	const Uint8* keyboard = SDL_GetKeyboardState(NULL);
+	for (int i = 0; i < 256; ++i)
+	{
+		if (keyboard[i])
+			keys[i] = (keys[i] == KEY_IDLE) ? KEY_DOWN : KEY_REPEAT;
+		else
+			keys[i] = (keys[i] == KEY_REPEAT || keys[i] == KEY_DOWN) ? KEY_UP : KEY_IDLE;
+	}
+
+	return true;
+}
+bool Game::Update()
+{
+	//Read Input
+	if (!Input())	return true;
+
+	//Process Input
+	int fx = 0, fy = 0;
+	if (keys[SDL_SCANCODE_ESCAPE] == KEY_DOWN)	return true;
+	if (keys[SDL_SCANCODE_UP] == KEY_REPEAT)	fy -= 1;
+	if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT)	fy += 1;
+	if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT)	fx -= 1;
+	if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT)	fx += 1;
+	if (keys[SDL_SCANCODE_RETURN] == KEY_DOWN)  intro = false;
+
+	return false;
+}
+
+
+
 bool Game::introScreen() {
 	//Fill background
 	SDL_SetRenderDrawColor(renderer, 0xBB, 0xFF, 0xFF, 1);
@@ -139,42 +179,55 @@ bool Game::introScreen() {
 	SDL_RenderPresent(renderer);
 	SDL_Delay(500);
 
+
+
+
+
+
 	/*Puede que esto cause problemas con input, ya que como no 
 	puede llegar a game.Input nunca debido a como está hecho el loop del main,
 	no puede volverse false. Básicamente,
 	Ahora mismo esto es un loop infinito.
 
 	Needs checkup*/
-	while (intro)			
-	{
-		
-		//Makes "Press enter to start appear and disappear"
-		if (present)
-		{
-			SDL_RenderCopy(renderer, textureEnterToStart, NULL, &enterToStartCard);
-			present = false;
-		}
-		else
-		{
-			SDL_SetRenderDrawColor(renderer, 0xBB, 0xFF, 0xFF, 1);
-			SDL_RenderFillRect(renderer, &coverUp);
-			SDL_RenderDrawRect(renderer, &coverUp);
-			present = true;
-		}
-		SDL_RenderPresent(renderer);
-		SDL_Delay(700);
-		intro = false;	//Comando temporal para romper el loop.
-						//Debería hacerlo un input.
-	}
+	if (!Input()) {
 
+
+		
+
+		while (intro)
+		{
+			intro = Update();
+
+			//Makes "Press enter to start appear and disappear"
+			SDL_RenderCopy(renderer, textureEnterToStart, NULL, &enterToStartCard);
+			/*if (present)
+			{
+				
+				present = false;
+			}
+			else
+			{
+				SDL_SetRenderDrawColor(renderer, 0xBB, 0xFF, 0xFF, 1);
+				SDL_RenderFillRect(renderer, &coverUp);
+				SDL_RenderDrawRect(renderer, &coverUp);
+				present = true;
+			}
+			SDL_RenderPresent(renderer);
+			SDL_Delay(700);*/
+
+			//Comando temporal para romper el loop.
+			//Debería hacerlo un input.
+
+		}
+
+	}
 
 
 	return true;
 }
 
-bool Game::Input(){
-	return false;
-}
+
 
 
 bool Game::Logic() {
@@ -203,7 +256,9 @@ void Game::Render()
 	test.getRect(&ball1.x, &ball1.y, &ball1.w, &ball1.h);
 	SDL_Rect ball2;
 	test.getRect(&ball2.x, &ball2.y, &ball2.w, &ball2.h);
+
 	ball2.x += WINDOW_WIDTH / 4;
+	
 	SDL_SetRenderDrawColor(renderer, 0xFE, 0xFE, 0xFE, 1);
 	SDL_RenderFillRect(renderer, &ball1);
 	SDL_RenderFillRect(renderer, &ball2);

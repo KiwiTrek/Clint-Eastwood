@@ -16,6 +16,7 @@
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 960
+#define MAX_KEYS 256
 
 
 
@@ -73,10 +74,15 @@ public:
 	void Render();		//Los render copies, los sonidos, las animaciones...
 						//Para probar Logic sobretodo movimiento, haced "SDL_RenderSetDrawColor" y "SDL_RenderFillRect" para los placeholders.
 						//Las rects que solo servirán para renderizar, dentro del render mismo
-	
+	bool Update();
 	//Incluso si son de otras clases, todo se debería de hacer aquí
 	//Sí no queréis llenar el código de mucho, siempre se puede crear una función para la clase e invocarla en el Logic/Render
 	//Pero al final el loop son el Input, el Logic y el Render (en ese orden)
 
 	void CleanUp();		//Close subsystems
+
+
+
+	enum KEY_STATE { KEY_IDLE, KEY_DOWN, KEY_REPEAT, KEY_UP };
+	KEY_STATE keys[MAX_KEYS];
 };
