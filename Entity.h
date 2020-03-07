@@ -19,14 +19,15 @@ public:
 	void setHeight(int HEIGHT);
 	void setSpeedX(int SPEEDX);
 	void setSpeedY(int SPEEDY);
+	void physics(Entity e, int WW, int WH);
 
 	void getRect(int* x, int* y, int* width, int* height);
 private:
 	bool is_alive = false;
-	int x;
-	int y;
-	int width;
-	int height;
-	int speedX;
-	int speedY;
+	int x = 0;
+	int y = 0;
+	int width = 1;
+	int height = 1;
+	int speedX = 0;
+	int speedY = 0;
 };

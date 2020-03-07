@@ -83,6 +83,13 @@ bool Game::Init() {
 	textureEnterToStart = SDL_CreateTextureFromSurface(renderer, enterToStart);
 	textureLogo = SDL_CreateTextureFromSurface(renderer, logo);
 
+	test.setX(100);
+	test.setY(100);
+	test.setWidth(100);
+	test.setHeight(100);
+	test.setSpeedX(0);
+	test.setSpeedY(0);
+
 	//Game
 	return true;
 }
@@ -171,24 +178,7 @@ bool Game::Input(){
 
 
 bool Game::Logic() {
-	const float gravity = 600.0f;         // pixels / second^2
-	const float deltaTime = 1.0f / 60.0f; // More or less 60 frames per second
-	//------------------------------------------------------------------------------GRAVITY
-	test.setX(test.getX() + test.getSpeedX() * deltaTime);
-	test.setY(test.getY() + test.getSpeedY() * deltaTime + gravity * deltaTime * deltaTime);
-	test.setSpeedY(test.getSpeedY() + gravity * deltaTime);
-
-	//------------------------------------------------------------------------------BORDERS OF SCREEN
-	if ((test.getX() + test.getWidth() - WINDOW_WIDTH) >= 0) {						//Right border
-		test.setSpeedX(test.getSpeedX());
-		test.setX(WINDOW_WIDTH - test.getWidth());
-	}
-	if (test.getX() <= 0) {															//Left border
-		test.setSpeedX(-test.getSpeedX());
-		test.setX(0);
-	}
-
-
+	test.physics(test, WINDOW_WIDTH, WINDOW_HEIGHT);
 	return false;
 }
 
@@ -206,6 +196,10 @@ void Game::Render()
 
 	//Temporal Balls
 	SDL_Rect ball1;
+	ball1.h = 100;
+	ball1.w = 100;
+	ball1.x = 200;
+	ball1.y = 200;
 	test.getRect(&ball1.x, &ball1.y, &ball1.w, &ball1.h);
 	SDL_Rect ball2;
 	test.getRect(&ball2.x, &ball2.y, &ball2.w, &ball2.h);
