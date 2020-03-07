@@ -24,6 +24,7 @@ class Game
 	//Variable declaration
 	//Añadid las que vayais a necesitar que tengan que ver directamente con Game.
 	//Si es de entity, por ejemplo, a entity.
+	//Las entities en si misma SÍ que se han de declarar aquí
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 	SDL_Surface* windowSurface = nullptr;
@@ -47,6 +48,9 @@ class Game
 	Mix_Music* introMusic = NULL;
 
 	bool present = true; //Aids the press enter to start thing
+	/////////////////////////////////////////////////////////////////////////////
+	//	MAIN GAME
+	Entity test;
 
 public:
 	Game();
@@ -68,6 +72,7 @@ public:
 	bool Logic();		//Aquí iría todo lo relacionado con la física, la AI, saltos, QTE, etc.
 	void Render();		//Los render copies, los sonidos, las animaciones...
 						//Para probar Logic sobretodo movimiento, haced "SDL_RenderSetDrawColor" y "SDL_RenderFillRect" para los placeholders.
+						//Las rects que solo servirán para renderizar, dentro del render mismo
 	
 	//Incluso si son de otras clases, todo se debería de hacer aquí
 	//Sí no queréis llenar el código de mucho, siempre se puede crear una función para la clase e invocarla en el Logic/Render

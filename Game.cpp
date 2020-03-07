@@ -156,6 +156,8 @@ bool Game::introScreen() {
 		}
 		SDL_RenderPresent(renderer);
 		SDL_Delay(700);
+		intro = false;	//Comando temporal para romper el loop.
+						//Debería hacerlo un input.
 	}
 
 
@@ -172,14 +174,13 @@ bool Game::Logic() {
 	const float gravity = 600.0f;         // pixels / second^2
 	const float deltaTime = 1.0f / 60.0f; // More or less 60 frames per second
 	//------------------------------------------------------------------------------GRAVITY
-	Entity test;
 	test.setX(test.getX() + test.getSpeedX() * deltaTime);
 	test.setY(test.getY() + test.getSpeedY() * deltaTime + gravity * deltaTime * deltaTime);
 	test.setSpeedY(test.getSpeedY() + gravity * deltaTime);
 
 	//------------------------------------------------------------------------------BORDERS OF SCREEN
 	if ((test.getX() + test.getWidth() - WINDOW_WIDTH) >= 0) {						//Right border
-		test.setSpeedX(-test.getSpeedX());
+		test.setSpeedX(test.getSpeedX());
 		test.setX(WINDOW_WIDTH - test.getWidth());
 	}
 	if (test.getX() <= 0) {															//Left border
@@ -194,7 +195,26 @@ bool Game::Logic() {
 
 void Game::Render()
 {
+	//Temporal BG
+	SDL_SetRenderDrawColor(renderer, 0xBB, 0xFF, 0xFF, 1);
+	SDL_RenderFillRect(renderer, NULL);
+	
+	//Temporal Ground
+	SDL_Rect ground = { 0,(WINDOW_HEIGHT * 3) / 4,WINDOW_WIDTH,WINDOW_HEIGHT / 4 };
+	SDL_SetRenderDrawColor(renderer, 0x62, 0x4A, 0x2E, 1);
+	SDL_RenderFillRect(renderer,&ground);
 
+	//Temporal Balls
+	SDL_Rect ball1;
+	test.getRect(&ball1.x, &ball1.y, &ball1.w, &ball1.h);
+	SDL_Rect ball2;
+	test.getRect(&ball2.x, &ball2.y, &ball2.w, &ball2.h);
+	ball2.x += WINDOW_WIDTH / 4;
+	SDL_SetRenderDrawColor(renderer, 0xFE, 0xFE, 0xFE, 1);
+	SDL_RenderFillRect(renderer, &ball1);
+	SDL_RenderFillRect(renderer, &ball2);
+
+	SDL_RenderPresent(renderer);
 }
 
 

@@ -19,6 +19,8 @@ public:
 	void setHeight(int HEIGHT);
 	void setSpeedX(int SPEEDX);
 	void setSpeedY(int SPEEDY);
+
+	void getRect(int* x, int* y, int* width, int* height);
 private:
 	bool is_alive = false;
 	int x;
