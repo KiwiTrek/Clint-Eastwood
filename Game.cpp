@@ -158,6 +158,7 @@ bool Game::introScreen() {
 	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 1);
 	introMusic = Mix_LoadMUS("Resources/Intro.wav");
 	Mix_PlayMusic(introMusic, 1);
+	
 	for (int i = 0; i < WINDOW_WIDTH; i++)
 	{
 		titleCard.x = i;
@@ -193,17 +194,15 @@ bool Game::introScreen() {
 	if (!Input()) {
 
 
-		
-
 		while (intro)
 		{
 			intro = Update();
 
 			//Makes "Press enter to start appear and disappear"
-			SDL_RenderCopy(renderer, textureEnterToStart, NULL, &enterToStartCard);
-			/*if (present)
+			
+			if (present)
 			{
-				
+				SDL_RenderCopy(renderer, textureEnterToStart, NULL, &enterToStartCard);
 				present = false;
 			}
 			else
@@ -214,7 +213,7 @@ bool Game::introScreen() {
 				present = true;
 			}
 			SDL_RenderPresent(renderer);
-			SDL_Delay(700);*/
+			SDL_Delay(700);
 
 			//Comando temporal para romper el loop.
 			//Debería hacerlo un input.
@@ -232,6 +231,9 @@ bool Game::introScreen() {
 
 bool Game::Logic() {
 	test.physics(test, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+	ball1.physics(ball1, WINDOW_WIDTH, WINDOW_HEIGHT);
+	ball2.physics(ball2, WINDOW_WIDTH, WINDOW_HEIGHT);
 	return false;
 }
 
@@ -248,11 +250,13 @@ void Game::Render()
 	SDL_RenderFillRect(renderer,&ground);
 
 	//Temporal Balls
+	
 	SDL_Rect ball1;
 	ball1.h = 100;
 	ball1.w = 100;
 	ball1.x = 200;
 	ball1.y = 200;
+
 	test.getRect(&ball1.x, &ball1.y, &ball1.w, &ball1.h);
 	SDL_Rect ball2;
 	test.getRect(&ball2.x, &ball2.y, &ball2.w, &ball2.h);
