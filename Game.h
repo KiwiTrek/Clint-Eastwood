@@ -86,4 +86,5 @@ public:
 
 	enum KEY_STATE { KEY_IDLE, KEY_DOWN, KEY_REPEAT, KEY_UP };
 	KEY_STATE keys[MAX_KEYS];
+	enum ID {ID_PLAYER, ID_BALL, ID_NET};
 };

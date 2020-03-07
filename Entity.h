@@ -13,15 +13,21 @@ public:
 	int getHeight();
 	int getSpeedX();
 	int getSpeedY();
+	int getID();
 	void setX(int X);
 	void setY(int Y);
 	void setWidth(int WIDTH);
 	void setHeight(int HEIGHT);
 	void setSpeedX(int SPEEDX);
 	void setSpeedY(int SPEEDY);
-	void physics(Entity &e, int WW, int WH);
-
+	void setID(int id);
+	void physics(int WW, int WH);
+	void collisions(Entity& e, int WW, int WH);
 	void getRect(int* x, int* y, int* width, int* height);
+
+	float sqrt(float X);
+	float ballCenterX();
+	float ballCenterY();
 private:
 	bool is_alive = false;
 	int x = 0;
@@ -30,4 +36,5 @@ private:
 	int height = 1;
 	int speedX = 1;
 	int speedY = 1;
+	int ID = 0;
 };

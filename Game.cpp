@@ -85,16 +85,18 @@ bool Game::Init() {
 
 	ball1.setX(100);
 	ball1.setY(100);
-	ball1.setWidth(100);
-	ball1.setHeight(100);
-	ball1.setSpeedX(150);
-	ball1.setSpeedY(150);
-	ball2.setX(1000);
-	ball2.setY(100);
-	ball2.setWidth(100);
-	ball2.setHeight(100);
+	ball1.setWidth(50);
+	ball1.setHeight(50);
+	ball1.setSpeedX(200);
+	ball1.setSpeedY(200);
+	ball1.setID(ID_BALL);
+	ball2.setX(1250);
+	ball2.setY(200);
+	ball2.setWidth(75);
+	ball2.setHeight(200);
 	ball2.setSpeedX(-150);
 	ball2.setSpeedY(150);
+	ball2.setID(ID_PLAYER);
 
 	//Game
 	return true;
@@ -236,8 +238,9 @@ bool Game::introScreen() {
 
 
 bool Game::Logic() {
-	ball1.physics(ball1, WINDOW_WIDTH, WINDOW_HEIGHT);
-	ball2.physics(ball2, WINDOW_WIDTH, WINDOW_HEIGHT);
+	ball1.physics(WINDOW_WIDTH, WINDOW_HEIGHT);
+	ball2.physics(WINDOW_WIDTH, WINDOW_HEIGHT);
+	ball1.collisions(ball2, WINDOW_WIDTH, WINDOW_HEIGHT);
 	return false;
 }
 
