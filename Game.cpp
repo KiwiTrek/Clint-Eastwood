@@ -169,6 +169,25 @@ bool Game::Input(){
 
 
 bool Game::Logic() {
+	const float gravity = 600.0f;         // pixels / second^2
+	const float deltaTime = 1.0f / 60.0f; // More or less 60 frames per second
+	//------------------------------------------------------------------------------GRAVITY
+	Entity test;
+	test.setX(test.getX() + test.getSpeedX() * deltaTime);
+	test.setY(test.getY() + test.getSpeedY() * deltaTime + gravity * deltaTime * deltaTime);
+	test.setSpeedY(test.getSpeedY() + gravity * deltaTime);
+
+	//------------------------------------------------------------------------------BORDERS OF SCREEN
+	if ((test.getX() + test.getWidth() - WINDOW_WIDTH) >= 0) {						//Right border
+		test.setSpeedX(-test.getSpeedX());
+		test.setX(WINDOW_WIDTH - test.getWidth());
+	}
+	if (test.getX() <= 0) {															//Left border
+		test.setSpeedX(-test.getSpeedX());
+		test.setX(0);
+	}
+
+
 	return false;
 }
 

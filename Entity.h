@@ -7,6 +7,24 @@ class Entity {
 public:
 	Entity();
 	bool IsAlive();
+	int getX();
+	int getY();
+	int getWidth();
+	int getHeight();
+	int getSpeedX();
+	int getSpeedY();
+	void setX(int X);
+	void setY(int Y);
+	void setWidth(int WIDTH);
+	void setHeight(int HEIGHT);
+	void setSpeedX(int SPEEDX);
+	void setSpeedY(int SPEEDY);
 private:
-	bool is_alive;
+	bool is_alive = false;
+	int x;
+	int y;
+	int width;
+	int height;
+	int speedX;
+	int speedY;
 };
