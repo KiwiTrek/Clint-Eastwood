@@ -3,8 +3,6 @@
 
 Entity::Entity() {};
 
-bool Entity::IsAlive() { return is_alive; };
-
 int Entity::getX() { return x; };
 int Entity::getY() { return y; };
 int Entity::getWidth() { return width; };
@@ -12,6 +10,7 @@ int Entity::getHeight() { return height; };
 int Entity::getSpeedX() { return speedX; };
 int Entity::getSpeedY() { return speedY; };
 int Entity::getID() { return ID; };
+int Entity::getAnimationState() { return animationState; };
 
 void Entity::setX(int X) { x = X; };
 void Entity::setY(int Y) { y = Y; };
@@ -20,6 +19,7 @@ void Entity::setHeight(int HEIGHT) { height = HEIGHT; };
 void Entity::setSpeedX(int SPEEDX) { speedX = SPEEDX; };
 void Entity::setSpeedY(int SPEEDY) { speedY = SPEEDY; };
 void Entity::setID(int id) { ID = id; };
+void Entity::setAnimationState(int state_) { animationState = state_; };
 
 float Entity::sqrt(float X) {
 	float number;
@@ -107,6 +107,15 @@ void Entity::collisions(Entity& e, int WW, int WH) {							// IF THERE ARE COLLI
 	}
 	else if (ID1 == 0 && ID2 == 2) {																	//If the first entity is a player and the second is a net
 
+	}
+}
+
+void Entity::movement(int dx, int dy, bool isJumping) {
+	x = dx * getSpeedX();
+	y = dy * getSpeedY();
+	if (isJumping == true) {
+		isJumping = false;
+		setSpeedY(10);																					//SERGI MODIFY THIS!!!!!!!!!!!!!!!!!!!!!!!
 	}
 }
 

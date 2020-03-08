@@ -63,13 +63,11 @@ class Game
 	Entity player2;
 	SDL_Surface* player2sur;
 	SDL_Texture* player2txt;
+	bool isPlayer = true;
 
 	Entity net;
 	SDL_Surface* netSur;
 	SDL_Texture* netTxt;
-
-	SDL_Surface* ground;
-	SDL_Texture* groundTxt;
 
 	SDL_Surface* bgSurface;
 	SDL_Texture* bgTxt;
@@ -96,6 +94,7 @@ public:
 						//Para probar Logic sobretodo movimiento, haced "SDL_RenderSetDrawColor" y "SDL_RenderFillRect" para los placeholders.
 						//Las rects que solo servirán para renderizar, dentro del render mismo
 	bool Update();
+	void setAnim(SDL_Rect* anim);
 	//Incluso si son de otras clases, todo se debería de hacer aquí
 	//Sí no queréis llenar el código de mucho, siempre se puede crear una función para la clase e invocarla en el Logic/Render
 	//Pero al final el loop son el Input, el Logic y el Render (en ese orden)
@@ -107,4 +106,6 @@ public:
 	enum KEY_STATE { KEY_IDLE, KEY_DOWN, KEY_REPEAT, KEY_UP };
 	KEY_STATE keys[MAX_KEYS];
 	enum ID {ID_PLAYER, ID_BALL, ID_NET};
+	SDL_Rect player1animations[24] = {};
+	SDL_Rect player2animations[24] = {};
 };

@@ -6,7 +6,6 @@ con las funciones definidas (como con el Game.h y el Game.cpp)*/
 class Entity {
 public:
 	Entity();
-	bool IsAlive();
 	int getX();
 	int getY();
 	int getWidth();
@@ -14,6 +13,7 @@ public:
 	int getSpeedX();
 	int getSpeedY();
 	int getID();
+	int getAnimationState();
 
 	void setX(int X);
 	void setY(int Y);
@@ -22,19 +22,19 @@ public:
 	void setSpeedX(int SPEEDX);
 	void setSpeedY(int SPEEDY);
 	void setID(int id);
+	void setAnimationState(int state_);
 
 	void physics(int WW, int WH);
 	void collisions(Entity& e, int WW, int WH);
-	void getRect(int* x, int* y, int* width, int* height);
-
 	float sqrt(float X);
 	float ballCenterX();
 	float ballCenterY();
 
-	//void updateAnimation();
+	void movement(int dx, int dy, bool isJumping);
+	bool isJumping = false;
+	void getRect(int* x, int* y, int* width, int* height);
 
 private:
-	bool is_alive = false;
 	int x = 0;
 	int y = 0;
 	int width = 1;
@@ -42,4 +42,14 @@ private:
 	int speedX = 1;
 	int speedY = 1;
 	int ID = 0;
+
+	int animationState = 0;
+	/*
+	0 = IDLE
+	1 = MOVING_LEFT
+	2 = MOVING_RIGHT
+	3 = JUMPING
+	4 = QTE
+	5 = LOSS
+	*/
 };
