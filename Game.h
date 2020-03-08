@@ -47,8 +47,9 @@ class Game
 	SDL_Rect logoCard = { 1205,885,75,75 };
 
 	Mix_Music* introMusic = NULL;
+	Mix_Chunk* ohYes = NULL;
 
-	bool present = true; //Aids the press enter to start thing
+
 	/////////////////////////////////////////////////////////////////////////////
 	//	MAIN GAME
 	Entity ball;

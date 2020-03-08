@@ -153,7 +153,17 @@ bool Game::Update()
 	if (keys[SDL_SCANCODE_DOWN] == KEY_REPEAT)	fy += 1;
 	if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT)	fx -= 1;
 	if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT)	fx += 1;
-	if (keys[SDL_SCANCODE_RETURN] == KEY_DOWN)  intro = false;
+	if (keys[SDL_SCANCODE_RETURN] == KEY_DOWN  && intro== true)
+	{
+		SDL_RenderPresent(renderer);
+		Mix_FreeMusic(introMusic);
+		ohYes = Mix_LoadWAV("Resources/ohyes.wav");
+		Mix_PlayChannel(-1, ohYes, 0);
+		SDL_Delay(3000);
+		Mix_FreeChunk(ohYes);
+		intro = false;
+	}
+		
 
 	return false;
 }
@@ -204,49 +214,8 @@ bool Game::introScreen() {
 	SDL_RenderCopy(renderer, textureTruth, NULL, &truthCard);
 	SDL_RenderCopy(renderer, textureLogo, NULL, &logoCard);
 	SDL_RenderPresent(renderer);
-	SDL_Delay(500);
-
-
-
-
-
-
-	/*Puede que esto cause problemas con input, ya que como no 
-	puede llegar a game.Input nunca debido a como está hecho el loop del main,
-	no puede volverse false. Básicamente,
-	Ahora mismo esto es un loop infinito.
-
-	Needs checkup*/
-	if (!Input()) {
-
-
-		while (intro)
-		{
-			intro = Update();
-
-			//Makes "Press enter to start appear and disappear"
-			
-			if (present)
-			{
-				SDL_RenderCopy(renderer, textureEnterToStart, NULL, &enterToStartCard);
-				present = false;
-			}
-			else
-			{
-				SDL_SetRenderDrawColor(renderer, 0xBB, 0xFF, 0xFF, 1);
-				SDL_RenderFillRect(renderer, &coverUp);
-				SDL_RenderDrawRect(renderer, &coverUp);
-				present = true;
-			}
-			SDL_RenderPresent(renderer);
-			SDL_Delay(700);
-
-			//Comando temporal para romper el loop.
-			//Debería hacerlo un input.
-
-		}
-
-	}
+	SDL_RenderCopy(renderer, textureEnterToStart, NULL, &enterToStartCard);
+	SDL_RenderPresent(renderer);
 
 
 	return true;
@@ -278,7 +247,7 @@ void Game::Render()
 	SDL_Rect ball_Rect;
 	ball.getRect(&ball_Rect.x, &ball_Rect.y, &ball_Rect.w, &ball_Rect.h);
 	SDL_Rect ball2_Rect;
-	ball2.getRect(&ball2_Rect.x, &ball2_Rect.y, &ball2_Rect.w, &ball2_Rect.h);
+	//ball2.getRect(&ball2_Rect.x, &ball2_Rect.y, &ball2_Rect.w, &ball2_Rect.h);
 	
 	SDL_SetRenderDrawColor(renderer, 0xFE, 0xFE, 0xFE, 1);
 	SDL_RenderFillRect(renderer, &ball_Rect);
