@@ -14,8 +14,10 @@ int main(int argc, char* argv[]) {
 			quit = game.Update();		//Hace los inputs del juego
 			if (!game.intro) { 
 				game.Logic();			//Hace la lógica del juego
+				game.Scoreboard();      //Hace la scoreboard
 				game.Render(); }		//Hace el render
 			SDL_Delay(10);
+			
 		}
 	}
 	game.CleanUp();						//Cierra todo

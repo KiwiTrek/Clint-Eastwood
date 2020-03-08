@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Entity.h"
 
 Game::Game() {};
 Game::~Game() {};
@@ -91,7 +92,7 @@ bool Game::Init() {
 	ball.setWidth(50);
 	ball.setHeight(50);
 	ball.setSpeedX(200);
-	ball.setSpeedY(200);
+	ball.setSpeedY(-200);  //Lo he convertido a -200 para que parezca mas floaty al empezar las rondas -Luce
 	ball.setID(ID_BALL);
 	ballSur = IMG_Load("Resources/Sprites/VolleyBall.png");
 	ballTxt = SDL_CreateTextureFromSurface(renderer,ballSur);
@@ -128,7 +129,17 @@ bool Game::Init() {
 	bgSurface = IMG_Load("Resources/Sprites/Background.jpg");
 	bgTxt = SDL_CreateTextureFromSurface(renderer, bgSurface);
 
+	//Game texts
 
+	sGetReady = IMG_Load("Resources/GetReady.png");
+	sPlayBall = IMG_Load("Resources/PlayBall.png");
+	sGame = IMG_Load("Resources/Game.png");
+	sPoint = IMG_Load("Resources/Point.png");
+
+	tGetReady = SDL_CreateTextureFromSurface(renderer, sGetReady);
+	tPlayBall = SDL_CreateTextureFromSurface(renderer, sPlayBall);
+	tGame = SDL_CreateTextureFromSurface(renderer, sGame);
+	tPoint = SDL_CreateTextureFromSurface(renderer, sPoint);
 
 	return true;
 }
@@ -345,7 +356,6 @@ bool Game::introScreen() {
 	//Create rectangles
 	SDL_Rect cardRects[WINDOW_WIDTH];
 	SDL_Rect leftRect[6];
-	SDL_Rect coverUp = { 540,800,200,75 };
 	
 
 	for (int i = 0; i < 3; i++)
@@ -389,6 +399,70 @@ bool Game::introScreen() {
 }
 
 
+void Game::Scoreboard()
+{
+	//Creates numbers, couldn't simplify sry
+	numbers[0] = IMG_Load("Resources/Numbers/0.png");
+	numbers[1] = IMG_Load("Resources/Numbers/1.png");
+	numbers[2] = IMG_Load("Resources/Numbers/2.png");
+	numbers[3] = IMG_Load("Resources/Numbers/3.png");
+	numbers[4] = IMG_Load("Resources/Numbers/4.png");
+	numbers[5] = IMG_Load("Resources/Numbers/5.png");
+	numbers[6] = IMG_Load("Resources/Numbers/6.png");
+	numbers[7] = IMG_Load("Resources/Numbers/7.png");
+	numbers[8] = IMG_Load("Resources/Numbers/8.png");
+	numbers[9] = IMG_Load("Resources/Numbers/9.png");
+
+	//Could simplify this, tho :3
+	for (int i = 0; i < 10; i++)
+	{
+		tNumbers[i] = SDL_CreateTextureFromSurface(renderer, numbers[i]);
+	}
+	
+	if (ball.getY() >=  + WINDOW_HEIGHT * 3 / 4 - ball.getHeight())
+	{
+		pointS1 = true;
+
+
+		//Point for player1
+		if (ball.getX() > WINDOW_WIDTH / 2)
+		{
+			ball.setSpeedX(-200);
+			ball.setSpeedY(-200);
+			score1[1]++;
+
+			if (score1[1] > 9)
+			{
+				score1[0]++;
+				score1[1] = 0;
+			}
+			if (score1[0] > 9)
+			{
+				score1[0] = 9;
+				score1[1] = 9;
+			}
+		}
+		//Point for player2
+		if (ball.getX() < WINDOW_WIDTH / 2)
+		{
+			ball.setSpeedX(200);
+			ball.setSpeedY(-200);
+			score2[1]++;
+
+			if (score2[1] > 9)
+			{
+				score2[0]++;
+				score2[1] = 0;
+			}
+			if (score2[0] > 9)
+			{
+				score2[0] = 9;
+				score2[1] = 9;
+			}
+		}	
+	}	
+}
+
 bool Game::Logic() {
 	ball.physics(WINDOW_WIDTH, WINDOW_HEIGHT);
 	//ball.collisions(ball2, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -424,6 +498,75 @@ void Game::Render()
 	SDL_Rect player2rect;
 	player2.getRect(&player2rect.x, &player2rect.y, &player2rect.w, &player2rect.h);
 	SDL_RenderCopy(renderer, player2txt, &player2animations[0], &player2rect);
+
+	//Scoreboard
+	//Player 1
+	for (int i = 0; i <= 9; i++)
+	{
+		if (score1[0] == i)
+		{
+			SDL_RenderCopy(renderer, tNumbers[i], NULL, &numbersCard1);
+		}
+
+		for (int j = 0; j <= 9; j++)
+		{
+			if (score1[1] == j)
+			{
+				SDL_RenderCopy(renderer, tNumbers[j], NULL, &numbersCard2);
+			}
+		}
+	}
+	//Player 2
+	for (int i = 0; i <= 9; i++)
+	{
+		if (score2[0] == i)
+		{
+			SDL_RenderCopy(renderer, tNumbers[i], NULL, &numbersCard3);
+		}
+
+		for (int j = 0; j <= 9; j++)
+		{
+			if (score2[1] == j)
+			{
+				SDL_RenderCopy(renderer, tNumbers[j], NULL, &numbersCard4);
+			}
+		}
+	}
+
+	//After getting a point (Part of ball repositioning is also done here, to avoid certain weird shit)
+	if (pointS3)
+	{
+		ball.setX(WINDOW_WIDTH / 2 -ball.getWidth()/2);
+		ball.setY(200);
+		SDL_RenderCopy(renderer, tPlayBall, NULL, &multiCard);
+		playBall = Mix_LoadWAV("Resources/announcer_play_ball.wav");
+		Mix_PlayChannel(-1, playBall, 0);
+		SDL_RenderPresent(renderer);
+		SDL_Delay(1300);
+		pointS3 = false;
+	}
+	if (pointS2)
+	{
+		ball.setX(WINDOW_WIDTH / 2 - ball.getWidth()/2);
+		ball.setY(200);
+		SDL_RenderCopy(renderer, tGetReady, NULL, &multiCard);
+		getReady = Mix_LoadWAV("Resources/announcer_get_ready.wav");
+		Mix_PlayChannel(-1, getReady, 0);
+		SDL_RenderPresent(renderer);
+		SDL_Delay(1200);
+		pointS2 = false;
+		pointS3 = true;
+	}
+	if (pointS1)
+	{
+		ball.setX(WINDOW_WIDTH / 2 - ball.getWidth()/2);
+		ball.setY(200);
+		SDL_RenderCopy(renderer, tPoint, NULL, &multiCard);
+		SDL_RenderPresent(renderer);
+		SDL_Delay(1000);
+		pointS1 = false;
+		pointS2 = true;
+	}		
 
 	SDL_RenderPresent(renderer);
 }

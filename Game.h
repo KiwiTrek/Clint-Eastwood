@@ -49,6 +49,40 @@ class Game
 	Mix_Music* introMusic = NULL;
 	Mix_Chunk* ohYes = NULL;
 
+	//Scoreboard
+	SDL_Surface* numbers[10] = {};
+	SDL_Texture* tNumbers[10] = {};
+	//Player1
+	SDL_Rect numbersCard1 = { 450,0,50,50 };
+	SDL_Rect numbersCard2 = { 510,0,50,50 };
+	//Player2
+	SDL_Rect numbersCard3 = { 720,0,50,50 };
+	SDL_Rect numbersCard4 = { 780,0,50,50 };
+
+	int score1[2] = { 0,0 };
+	int score2[2] = { 0,0 };
+
+	//Game texts and sound effects
+	bool pointS1 = false;
+	bool pointS2 = false;
+	bool pointS3 = false;
+
+
+	Mix_Chunk* getReady = NULL;
+	Mix_Chunk* playBall = NULL;
+	Mix_Chunk* game = NULL;
+
+	SDL_Surface* sGetReady = NULL;
+	SDL_Surface* sPlayBall = NULL;
+	SDL_Surface* sGame = NULL;
+	SDL_Surface* sPoint = NULL; //No sfx, yet
+
+	SDL_Texture* tGetReady = NULL; 
+	SDL_Texture* tPlayBall = NULL; 
+	SDL_Texture* tGame = NULL;
+	SDL_Texture* tPoint = NULL;
+
+	SDL_Rect multiCard = { 590,100,100,50 };
 
 	/////////////////////////////////////////////////////////////////////////////
 	//	MAIN GAME
@@ -90,6 +124,9 @@ public:
 						
 
 	bool Logic();		//Aquí iría todo lo relacionado con la física, la AI, saltos, QTE, etc.
+
+	void Scoreboard();
+
 	void Render();		//Los render copies, los sonidos, las animaciones...
 						//Para probar Logic sobretodo movimiento, haced "SDL_RenderSetDrawColor" y "SDL_RenderFillRect" para los placeholders.
 						//Las rects que solo servirán para renderizar, dentro del render mismo
