@@ -83,22 +83,40 @@ bool Game::Init() {
 	textureEnterToStart = SDL_CreateTextureFromSurface(renderer, enterToStart);
 	textureLogo = SDL_CreateTextureFromSurface(renderer, logo);
 
-	ball1.setX(100);
-	ball1.setY(100);
-	ball1.setWidth(50);
-	ball1.setHeight(50);
-	ball1.setSpeedX(200);
-	ball1.setSpeedY(200);
-	ball1.setID(ID_BALL);
-	ball2.setX(1250);
-	ball2.setY(200);
-	ball2.setWidth(75);
-	ball2.setHeight(200);
-	ball2.setSpeedX(-150);
-	ball2.setSpeedY(150);
-	ball2.setID(ID_PLAYER);
-
 	//Game
+
+		//Ball
+	ball.setX(WINDOW_WIDTH / 2);
+	ball.setY(100);
+	ball.setWidth(50);
+	ball.setHeight(50);
+	ball.setSpeedX(200);
+	ball.setSpeedY(200);
+	ball.setID(ID_BALL);
+
+		//Player1
+	player1.setX(WINDOW_WIDTH / 4);
+	player1.setY(WINDOW_HEIGHT / 2);
+	player1.setWidth(50);
+	player1.setHeight(100);
+	player1.setID(ID_PLAYER);
+
+		//Player2
+	player2.setX(WINDOW_WIDTH / 4);
+	player2.setY(WINDOW_HEIGHT / 2);
+	player2.setWidth(50);
+	player2.setHeight(100);
+	player2.setID(ID_PLAYER);
+
+		//Net
+	net.setWidth(25);
+	net.setX((WINDOW_WIDTH / 2)-(net.getWidth()/2));
+	net.setY((WINDOW_HEIGHT * 3) / 2);
+	net.setHeight(WINDOW_HEIGHT / 4);
+	net.setID(ID_NET);
+
+
+
 	return true;
 }
 
@@ -238,9 +256,8 @@ bool Game::introScreen() {
 
 
 bool Game::Logic() {
-	ball1.physics(WINDOW_WIDTH, WINDOW_HEIGHT);
-	ball2.physics(WINDOW_WIDTH, WINDOW_HEIGHT);
-	ball1.collisions(ball2, WINDOW_WIDTH, WINDOW_HEIGHT);
+	ball.physics(WINDOW_WIDTH, WINDOW_HEIGHT);
+	//ball.collisions(ball2, WINDOW_WIDTH, WINDOW_HEIGHT);
 	return false;
 }
 
@@ -258,13 +275,13 @@ void Game::Render()
 
 	//Temporal Balls
 	
-	SDL_Rect ball1_Rect;
-	ball1.getRect(&ball1_Rect.x, &ball1_Rect.y, &ball1_Rect.w, &ball1_Rect.h);
+	SDL_Rect ball_Rect;
+	ball.getRect(&ball_Rect.x, &ball_Rect.y, &ball_Rect.w, &ball_Rect.h);
 	SDL_Rect ball2_Rect;
 	ball2.getRect(&ball2_Rect.x, &ball2_Rect.y, &ball2_Rect.w, &ball2_Rect.h);
 	
 	SDL_SetRenderDrawColor(renderer, 0xFE, 0xFE, 0xFE, 1);
-	SDL_RenderFillRect(renderer, &ball1_Rect);
+	SDL_RenderFillRect(renderer, &ball_Rect);
 	SDL_RenderFillRect(renderer, &ball2_Rect);
 
 	SDL_RenderPresent(renderer);

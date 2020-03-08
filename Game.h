@@ -51,8 +51,27 @@ class Game
 	bool present = true; //Aids the press enter to start thing
 	/////////////////////////////////////////////////////////////////////////////
 	//	MAIN GAME
-	Entity ball1;
-	Entity ball2;
+	Entity ball;
+	SDL_Surface* ballSur;
+	SDL_Texture* ballTxt;
+
+	Entity player1;
+	SDL_Surface* player1sur;
+	SDL_Texture* player1txt;
+
+	Entity player2;
+	SDL_Surface* player2sur;
+	SDL_Texture* player2txt;
+
+	Entity net;
+	SDL_Surface* netSur;
+	SDL_Texture* netTxt;
+
+	SDL_Surface* ground;
+	SDL_Texture* groundTxt;
+
+	SDL_Surface* bgSurface;
+	SDL_Texture* bgTxt;
 
 public:
 	Game();

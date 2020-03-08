@@ -14,6 +14,7 @@ public:
 	int getSpeedX();
 	int getSpeedY();
 	int getID();
+
 	void setX(int X);
 	void setY(int Y);
 	void setWidth(int WIDTH);
@@ -21,6 +22,7 @@ public:
 	void setSpeedX(int SPEEDX);
 	void setSpeedY(int SPEEDY);
 	void setID(int id);
+
 	void physics(int WW, int WH);
 	void collisions(Entity& e, int WW, int WH);
 	void getRect(int* x, int* y, int* width, int* height);
@@ -28,6 +30,9 @@ public:
 	float sqrt(float X);
 	float ballCenterX();
 	float ballCenterY();
+
+	//void updateAnimation();
+
 private:
 	bool is_alive = false;
 	int x = 0;
