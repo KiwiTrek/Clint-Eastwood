@@ -111,8 +111,8 @@ void Entity::collisions(Entity& e, int WW, int WH) {							// IF THERE ARE COLLI
 }
 
 void Entity::movement(int dx, int dy, bool isJumping) {
-	x = dx * getSpeedX();
-	y = dy * getSpeedY();
+	x += dx * getSpeedX();
+	y += dy * getSpeedY();
 	if (isJumping == true) {
 		isJumping = false;
 		setSpeedY(10);																					//SERGI MODIFY THIS!!!!!!!!!!!!!!!!!!!!!!!

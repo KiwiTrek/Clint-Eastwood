@@ -97,20 +97,20 @@ bool Game::Init() {
 	ballTxt = SDL_CreateTextureFromSurface(renderer,ballSur);
 
 		//Player1
-	player1.setHeight(100);
+	player1.setHeight(200);
 	player1.setX(WINDOW_WIDTH / 4);
-	player1.setY(((WINDOW_HEIGHT * 3) / 7) - 10 - player1.getHeight());
-	player1.setWidth(50);
+	player1.setY((WINDOW_HEIGHT * 3) / 4 - player1.getHeight());
+	player1.setWidth(100);
 	player1.setID(ID_PLAYER);
 	player1sur = IMG_Load("Resources/Sprites/Player1.png");
 	player1txt = SDL_CreateTextureFromSurface(renderer, player1sur);
 	setAnim(player1animations);
 
 		//Player2
-	player2.setWidth(50);
-	player2.setHeight(100);
-	player2.setX(WINDOW_WIDTH - player2.getWidth());
-	player2.setY(((WINDOW_HEIGHT * 3) / 7) - 10 - player2.getHeight());
+	player2.setWidth(100);
+	player2.setHeight(200);
+	player2.setX((WINDOW_WIDTH * 3) / 4 - player2.getWidth());
+	player2.setY((WINDOW_HEIGHT * 3) / 4 - player2.getHeight());
 	player2.setID(ID_PLAYER);
 	player2sur = IMG_Load("Resources/Sprites/Player2.png");
 	player2txt = SDL_CreateTextureFromSurface(renderer, player2sur);
