@@ -1,0 +1,22 @@
+                        else if (ballCenterX(j,ball) - ballCenterX(i,ball) > 0) {
+                            if (ball[i].vx > 0 && ball[j].vx > 0) {
+                                ball[i].vx = -ball[i].vx / ballWeight(i);
+                                ball[j].vx = ball[j].vx * ballWeight(j);
+                            }
+                            else if (ball[i].vx > 0 && ball[j].vx < 0) {
+                                ball[i].vx = -ball[i].vx / ballWeight(i);
+                                ball[j].vx = -ball[j].vx / ballWeight(j);
+                            }
+                            else if (ball[i].vx < 0 && ball[j].vx < 0) {
+                                ball[i].vx = ball[i].vx * ballWeight(i);
+                                ball[j].vx = -ball[j].vx / ballWeight(j);
+                            }
+                        }
+
+
+
+else if (ballCenterX(j,ball) - ballCenterX(i,ball) > 0) {
+    if (!(ball[i].vx < 0 && ball[j].vx > 0)) {
+        ball[i].vx = (ball[i].vx > 0 ? -ball[i].vx / ballWeight(i) : ball[i].vx * ballWeight(i));
+        ball[j].vx = (ball[j].vx > 0 ? ball[j].vx * ballWeight(j) : -ball[j].vx / ballWeight(j));
+    }
