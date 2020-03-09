@@ -101,14 +101,14 @@ bool Game::Init() {
 	player1.setHeight(200);
 	player1.setX(WINDOW_WIDTH / 4);
 	player1.setY((WINDOW_HEIGHT * 3) / 4 - player1.getHeight());
-	player1.setWidth(200);
+	player1.setWidth(100);
 	player1.setID(ID_PLAYER);
 	player1sur = IMG_Load("Resources/Sprites/Player1.png");
 	player1txt = SDL_CreateTextureFromSurface(renderer, player1sur);
 	setAnim(player1animations);
 
 		//Player2
-	player2.setWidth(200);
+	player2.setWidth(100);
 	player2.setHeight(200);
 	player2.setX((WINDOW_WIDTH * 3) / 4 - player2.getWidth());
 	player2.setY((WINDOW_HEIGHT * 3) / 4 - player2.getHeight());
@@ -118,7 +118,7 @@ bool Game::Init() {
 	setAnim(player2animations);
 
 		//Net
-	net.setWidth(25);
+	net.setWidth(10);
 	net.setX((WINDOW_WIDTH / 2)-((net.getWidth())/2));
 	net.setY(((WINDOW_HEIGHT * 3) / 7) - 10);
 	net.setHeight(WINDOW_HEIGHT / 3);
@@ -421,7 +421,7 @@ void Game::Scoreboard()
 		//Point for player1
 		if (ball.getX() > WINDOW_WIDTH / 2)
 		{
-			ball.setSpeedX(-200);
+			ball.setSpeedX(200);
 			ball.setSpeedY(-200);
 			score1[1]++;
 
@@ -439,7 +439,7 @@ void Game::Scoreboard()
 		//Point for player2
 		if (ball.getX() < WINDOW_WIDTH / 2)
 		{
-			ball.setSpeedX(200);
+			ball.setSpeedX(-200);
 			ball.setSpeedY(-200);
 			score2[1]++;
 

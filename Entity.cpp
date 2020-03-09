@@ -48,13 +48,13 @@ float Entity::CenterY() {
 
 double Entity::weight() {
     int id = getID();
-    if (id == 0) {
-        return 100;
+    if (id == 0) { //player
+        return 10;
     }
-    else if (id == 1) {
+    else if (id == 1) { //ball
         return 1.125;
     }
-    else if (id == 2) {
+    else if (id == 2) { //net
         return 0.0625;
     }
 }
@@ -100,34 +100,48 @@ void Entity::collisions(Entity& e) {					                    	// IF THERE ARE CO
 	bool isVXP = ((vx1 - vx2) > 0) ? true : false;
 	bool isVYP = ((vy1 - vy2) > 0) ? true : false;
 
-	if (sqrt(incrementX * incrementX + incrementY * incrementY) <= 125/*(getWidth()/2 + e.getWidth()/2)*/) {
-        if (isXP == false && !(vx1 > 0 && vx2 < 0)) {
 
+	if (ID1 == 1 && ID2 == 0) {																			//If the first entity is a ball and the second is a player
+        if (sqrt(incrementX * incrementX + incrementY * incrementY) <= 125/*(getWidth()/2 + e.getWidth()/2)*/) {
+            if (isXP == false && !(vx1 > 0 && vx2 < 0)) {
+                setSpeedX(vx1 < 0 ? -vx1 / weight() : vx1 * weight());
+                e.setSpeedY(vx2 < 0 ? vx2 * e.weight() : -vx2 / e.weight());
+            }
+            else if (isXP == true && !(vx1 < 0 && vx2 > 0)) {
+                setSpeedX(vx1 > 0 ? -vx1 / weight() : vx1 * weight());
+                e.setSpeedX(vx2 > 0 ? vx2 * e.weight() : -vx2 / e.weight());
+            }
+            if (isYP == false && !(vy1 > 0 && vy2 < 0)) {
+                setSpeedY(vy1 < 0 ? vy1 * weight() : -vy1 / weight());
+                e.setSpeedY(vy2 < 0 ? -vy2 / weight() : vy2 * weight());
+            }
+            else if (isYP == true && !(vy1 < 0 && vy2 > 0)) {
+                setSpeedY(vy1 > 0 ? -vy1 / weight() : vy1 * weight());
+                e.setSpeedY(vy2 > 0 ? vy2 * weight() : -vy2 / weight());
+            }
+        }
+	}
+    else if (ID1 == 1 && ID2 == 2) {																	//If the first entity is a ball and the second is a net
+        if ((CenterX() + 25 - e.getX()) <= -100 && (CenterX() + 25 - e.getX()) >= 0) {
             setSpeedX(vx1 < 0 ? -vx1 / weight() : vx1 * weight());
             e.setSpeedY(vx2 < 0 ? vx2 * e.weight() : -vx2 / e.weight());
         }
-        else if (isXP == true && !(vx1 < 0 && vx2 > 0)) {
-            setSpeedX(vx1 > 0 ? -vx1 / weight() : vx1 * weight());
-            e.setSpeedX(vx2 > 0 ? vx2 * e.weight() : -vx2 / e.weight());
+        else if ((CenterX() + 25 - e.getX()) >= 0 && (CenterX() + 25 - e.getX()) <= 100) {
+                setSpeedX(vx1 > 0 ? -vx1 / weight() : vx1 * weight());
+                e.setSpeedX(vx2 > 0 ? vx2 * e.weight() : -vx2 / e.weight());
         }
-		if (isYP == false && !(vy1 > 0 && vy2 < 0)) {
-            setSpeedY(vy1 < 0 ? vy1 * weight() : -vy1 / weight());
-            e.setSpeedY(vy2 < 0 ? -vy2 / weight() : vy2 * weight());
-		}
-		else if(isYP == true && !(vy1 < 0 && vy2 > 0)) {
-            setSpeedY(vy1 > 0 ? -vy1 / weight() : vy1 * weight());
-            e.setSpeedY(vy2 > 0 ? vy2 * weight() : -vy2 / weight());
-		}
-	}
-	//if (ID1 == 1 && ID2 == 0) {																			//If the first entity is a ball and the second is a player
-
-	//}
-	//else if (ID1 == 1 && ID2 == 2) {																	//If the first entity is a ball and the second is a net
-
-	//}
-	//else if (ID1 == 0 && ID2 == 2) {																	//If the first entity is a player and the second is a net
-
-	//}
+            //if (isYP == false && !(vy1 > 0 && vy2 < 0)) {
+            //    setSpeedY(vy1 < 0 ? vy1 * weight() : -vy1 / weight());
+            //    e.setSpeedY(vy2 < 0 ? -vy2 / weight() : vy2 * weight());
+            //}
+            //else if (isYP == true && !(vy1 < 0 && vy2 > 0)) {
+            //    setSpeedY(vy1 > 0 ? -vy1 / weight() : vy1 * weight());
+            //    e.setSpeedY(vy2 > 0 ? vy2 * weight() : -vy2 / weight());
+            //}
+        
+    }
+    else if (ID1 == 0 && ID2 == 2) {																	//If the first entity is a player and the second is a net
+    }
 }
 
 void Entity::getRect(int* x, int* y, int* width, int* height) {
