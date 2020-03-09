@@ -516,6 +516,10 @@ void Game::Render()
 	{
 		ball.setX(WINDOW_WIDTH / 2 - ball.getWidth() / 2);
 		ball.setY(200);
+		player1.setSpeedX(0);
+		player1.setSpeedY(0);
+		player2.setSpeedX(0);
+		player2.setSpeedY(0);
 		player1.setX(WINDOW_WIDTH / 4);
 		player2.setX((WINDOW_WIDTH * 3 / 4) - player2.getWidth());
 		player1.setY((WINDOW_HEIGHT * 3 / 4) - player1.getHeight());
@@ -531,6 +535,10 @@ void Game::Render()
 	{
 		ball.setX(WINDOW_WIDTH / 2 - ball.getWidth() / 2);
 		ball.setY(200);
+		player1.setSpeedX(0);
+		player1.setSpeedY(0);
+		player2.setSpeedX(0);
+		player2.setSpeedY(0);
 		player1.setX(WINDOW_WIDTH / 4);
 		player2.setX((WINDOW_WIDTH * 3 / 4) - player2.getWidth());
 		player1.setY((WINDOW_HEIGHT * 3 / 4) - player1.getHeight());
@@ -546,6 +554,10 @@ void Game::Render()
 	{
 		ball.setX(WINDOW_WIDTH / 2 - ball.getWidth() / 2);
 		ball.setY(200);
+		player1.setSpeedX(0);
+		player1.setSpeedY(0);
+		player2.setSpeedX(0);
+		player2.setSpeedY(0);
 		player1.setX(WINDOW_WIDTH / 4);
 		player2.setX((WINDOW_WIDTH * 3 / 4) - player2.getWidth());
 		player1.setY((WINDOW_HEIGHT * 3 / 4) - player1.getHeight());
