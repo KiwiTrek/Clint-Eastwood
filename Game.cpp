@@ -171,6 +171,24 @@ bool Game::Init() {
 	tP1Wins = SDL_CreateTextureFromSurface(renderer, sP1Wins);
 	tP2Wins = SDL_CreateTextureFromSurface(renderer, sP2Wins);
 
+	//Creates numbers, couldn't simplify sry
+	numbers[0] = IMG_Load("Resources/Numbers/0.png");
+	numbers[1] = IMG_Load("Resources/Numbers/1.png");
+	numbers[2] = IMG_Load("Resources/Numbers/2.png");
+	numbers[3] = IMG_Load("Resources/Numbers/3.png");
+	numbers[4] = IMG_Load("Resources/Numbers/4.png");
+	numbers[5] = IMG_Load("Resources/Numbers/5.png");
+	numbers[6] = IMG_Load("Resources/Numbers/6.png");
+	numbers[7] = IMG_Load("Resources/Numbers/7.png");
+	numbers[8] = IMG_Load("Resources/Numbers/8.png");
+	numbers[9] = IMG_Load("Resources/Numbers/9.png");
+
+	//Could simplify this, tho :3
+	for (int i = 0; i < 10; i++)
+	{
+		tNumbers[i] = SDL_CreateTextureFromSurface(renderer, numbers[i]);
+	}
+
 	return true;
 }
 
@@ -304,23 +322,6 @@ bool Game::introScreen() {
 
 void Game::Scoreboard()
 {
-	//Creates numbers, couldn't simplify sry
-	numbers[0] = IMG_Load("Resources/Numbers/0.png");
-	numbers[1] = IMG_Load("Resources/Numbers/1.png");
-	numbers[2] = IMG_Load("Resources/Numbers/2.png");
-	numbers[3] = IMG_Load("Resources/Numbers/3.png");
-	numbers[4] = IMG_Load("Resources/Numbers/4.png");
-	numbers[5] = IMG_Load("Resources/Numbers/5.png");
-	numbers[6] = IMG_Load("Resources/Numbers/6.png");
-	numbers[7] = IMG_Load("Resources/Numbers/7.png");
-	numbers[8] = IMG_Load("Resources/Numbers/8.png");
-	numbers[9] = IMG_Load("Resources/Numbers/9.png");
-
-	//Could simplify this, tho :3
-	for (int i = 0; i < 10; i++)
-	{
-		tNumbers[i] = SDL_CreateTextureFromSurface(renderer, numbers[i]);
-	}
 	
 	if (ball.getY() >=  + WINDOW_HEIGHT * 3 / 4 - ball.getHeight())
 	{
