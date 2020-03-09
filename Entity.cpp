@@ -1,6 +1,9 @@
 /*Aquí irían las declaraciones de las funciones de entity*/
 #include "Entity.h"
 
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 960
+
 Entity::Entity() {};
 
 int Entity::getX() { return x; };
@@ -60,7 +63,7 @@ void Entity::physics(int WW, int WH) {
 		setSpeedX(-getSpeedX());
 		setX(0);
 	}
-	if (getY() >= (WH * 3) / 4 - getHeight()) {
+	if (getY() >= (WH * 3) / 4 - getHeight()) {                                 //Ground
 		setY((WH * 3) / 4 - getHeight());
 	}
 }
@@ -85,7 +88,10 @@ void Entity::collisions(Entity& e, int WW, int WH) {							// IF THERE ARE COLLI
 	bool isVYP = ((vy1 - vy2) > 0) ? true : false;
 	if (sqrt(incrementX * incrementX + incrementY * incrementY) <= (getWidth()/4 + e.getWidth()/4)) {
 		if (isXP == false && isYP == false) {
-
+            if (!vx1 < 0 && vx2 > 0) {
+//                setSpeedX( vx1 > 0 ? -vx1 / ballWeight(i) : vx1 * ballWeight(i));
+//                e.setSpeedX( vx2 > 0 ? vx2 * ballWeight(j) : -vx2 / ballWeight(j));
+            }
 		}
 		else if(isXP == false && isYP == true) {
 
@@ -111,12 +117,13 @@ void Entity::collisions(Entity& e, int WW, int WH) {							// IF THERE ARE COLLI
 }
 
 void Entity::movement(int dx, int dy, bool isJumping) {
-	x += dx * getSpeedX();
-	y += dy * getSpeedY();
 	if (isJumping == true) {
 		isJumping = false;
-		setSpeedY(10);																					//SERGI MODIFY THIS!!!!!!!!!!!!!!!!!!!!!!!
+		//setSpeedY(200);																					//SERGI MODIFY THIS!!!!!!!!!!!!!!!!!!!!!!!
+        //y -= dy * getSpeedY();
 	}
+    x += dx * getSpeedX() / 6;
+    y += dy * getSpeedY() / 6;
 }
 
 void Entity::getRect(int* x, int* y, int* width, int* height) {

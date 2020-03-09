@@ -300,32 +300,31 @@ bool Game::Update()
 	int fx1 = 0, fy1 = 0, fx2 = 0, fy2 = 0;
 	if (keys[SDL_SCANCODE_ESCAPE] == KEY_DOWN)	return true;
 	if (keys[SDL_SCANCODE_A] == KEY_REPEAT) {
-		fx1 -= 1;
+		fx1 -= 20;
 		player1.setAnimationState(1);
 	}
 	if (keys[SDL_SCANCODE_D] == KEY_REPEAT) {
-		fx1 += 1;
+		fx1 += 20;
 		player1.setAnimationState(2);
 	}
 	if (keys[SDL_SCANCODE_W] == KEY_DOWN) {
+        fy1--;
 		player1.isJumping = true;
 		player1.setAnimationState(3);
 	}
 	
-	if (isPlayer = true) {
-		if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
-			fx2 -= 1;
-			player2.setAnimationState(1);
-		}
-		if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
-			fx2 -= 2;
-			player2.setAnimationState(2);
-		}
-		if (keys[SDL_SCANCODE_UP] == KEY_DOWN) {
-			player2.isJumping = true;
-			player2.setAnimationState(3);
-		}
-		player2.movement(fx2, fy2, player2.isJumping);
+	if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
+		fx2 -= 20;
+		player2.setAnimationState(1);
+	}
+	if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
+		fx2 += 20;
+		player2.setAnimationState(2);
+	}
+	if (keys[SDL_SCANCODE_UP] == KEY_DOWN) {
+        fy2--;
+		player2.isJumping = true;
+		player2.setAnimationState(3);
 	}
 
 	if (keys[SDL_SCANCODE_RETURN] == KEY_DOWN  && intro == true)
@@ -340,8 +339,7 @@ bool Game::Update()
 	}
 
 	player1.movement(fx1, fy1, player1.isJumping);
-	
-		
+    player2.movement(fx2, fy2, player2.isJumping);
 
 	return false;
 }
@@ -465,7 +463,10 @@ void Game::Scoreboard()
 
 bool Game::Logic() {
 	ball.physics(WINDOW_WIDTH, WINDOW_HEIGHT);
-	//ball.collisions(ball2, WINDOW_WIDTH, WINDOW_HEIGHT);
+    player1.physics(WINDOW_WIDTH, WINDOW_HEIGHT);
+    player2.physics(WINDOW_WIDTH, WINDOW_HEIGHT);
+    net.physics(WINDOW_WIDTH, WINDOW_HEIGHT);
+	ball.collisions(net, WINDOW_WIDTH, WINDOW_HEIGHT);
 	return false;
 }
 

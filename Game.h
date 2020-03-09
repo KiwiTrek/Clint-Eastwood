@@ -97,7 +97,6 @@ class Game
 	Entity player2;
 	SDL_Surface* player2sur;
 	SDL_Texture* player2txt;
-	bool isPlayer = true;
 
 	Entity net;
 	SDL_Surface* netSur;
