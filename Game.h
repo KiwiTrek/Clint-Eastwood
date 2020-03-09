@@ -51,8 +51,8 @@ class Game
 	SDL_Rect truthCard = { 100,550,1080,75 };
 	SDL_Rect enterToStartCard = { 540,800,200,75 };
 	SDL_Rect logoCard = { 1205,885,75,75 };
-	SDL_Rect P1CCard = { 0,650,300,300 };
-	SDL_Rect P2CCard = { 980,650,300,300 };
+	SDL_Rect P1CCard = { 20,610,300,300 };
+	SDL_Rect P2CCard = { 960,610,300,300 };
 	SDL_Rect PE2QCard = { 440,900,400,30 };
 
 
