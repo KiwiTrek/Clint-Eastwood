@@ -46,7 +46,20 @@ float Entity::ballCenterY() {
 	return centerY;
 }
 
-void Entity::physics(int WW, int WH) {
+double Entity::weight() {
+    int id = getID();
+    if (id == 0) {
+        return 1.125;
+    }
+    else if (id == 1) {
+        return 1.0625;
+    }
+    else if (id == 2) {
+        return 69420;
+    }
+}
+
+void Entity::physics() {
 	const float gravity = 600.0f;				// pixels / second^2
 	const float deltaTime = 1.0f / 60.0f;		// More or less 60 frames per second
 	//------------------------------------------------------------------------------GRAVITY
@@ -55,21 +68,21 @@ void Entity::physics(int WW, int WH) {
 	setSpeedY(getSpeedY() + gravity * deltaTime);
 
 	//------------------------------------------------------------------------------BORDERS OF SCREEN
-	if ((getX() + getWidth() - WW) >= 0) {										//Right border
+	if ((getX() + getWidth() - WINDOW_WIDTH) >= 0) {										//Right border
 		setSpeedX(-getSpeedX());
-		setX(WW - getWidth());
+		setX(WINDOW_WIDTH - getWidth());
 	}
 	if (getX() <= 0) {															//Left border
 		setSpeedX(-getSpeedX());
 		setX(0);
 	}
-	if (getY() >= (WH * 3) / 4 - getHeight()) {                                 //Ground
-		setY((WH * 3) / 4 - getHeight());
+	if (getY() >= (WINDOW_HEIGHT * 3) / 4 - getHeight()) {                                 //Ground
+		setY((WINDOW_HEIGHT * 3) / 4 - getHeight());
 	}
 }
 																				//////////////////////////////////////////////////////////////////////////////////////////////
 																				// IF THERE ARE COLLISIONS AND A BALL IS INFLUENCED, THE BALL WILL BE THE CALLING OBJECT	//
-void Entity::collisions(Entity& e, int WW, int WH) {							// IF THERE ARE COLLISIONS AND A NET IS INFLUENCED, THE NET WILL BE THE SECOND OBJECT		//
+void Entity::collisions(Entity& e) {					                    	// IF THERE ARE COLLISIONS AND A NET IS INFLUENCED, THE NET WILL BE THE SECOND OBJECT		//
 	int ID1 = getID();															//////////////////////////////////////////////////////////////////////////////////////////////
 	int ID2 = e.getID();
 	int x1 = getX();
@@ -86,9 +99,10 @@ void Entity::collisions(Entity& e, int WW, int WH) {							// IF THERE ARE COLLI
 	bool isYP = (incrementY > 0) ? true : false;
 	bool isVXP = ((vx1 - vx2) > 0) ? true : false;
 	bool isVYP = ((vy1 - vy2) > 0) ? true : false;
+
 	if (sqrt(incrementX * incrementX + incrementY * incrementY) <= (getWidth()/4 + e.getWidth()/4)) {
 		if (isXP == false && isYP == false) {
-            if (!vx1 < 0 && vx2 > 0) {
+            if (!(vx1 < 0 && vx2 > 0)) {
 //                setSpeedX( vx1 > 0 ? -vx1 / ballWeight(i) : vx1 * ballWeight(i));
 //                e.setSpeedX( vx2 > 0 ? vx2 * ballWeight(j) : -vx2 / ballWeight(j));
             }

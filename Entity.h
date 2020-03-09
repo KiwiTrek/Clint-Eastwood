@@ -24,11 +24,12 @@ public:
 	void setID(int id);
 	void setAnimationState(int state_);
 
-	void physics(int WW, int WH);
-	void collisions(Entity& e, int WW, int WH);
+	void physics();
+	void collisions(Entity& e);
 	float sqrt(float X);
 	float ballCenterX();
 	float ballCenterY();
+    double weight();
 
 	void movement(int dx, int dy, bool isJumping);
 	bool isJumping = false;

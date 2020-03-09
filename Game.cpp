@@ -462,11 +462,11 @@ void Game::Scoreboard()
 }
 
 bool Game::Logic() {
-	ball.physics(WINDOW_WIDTH, WINDOW_HEIGHT);
-    player1.physics(WINDOW_WIDTH, WINDOW_HEIGHT);
-    player2.physics(WINDOW_WIDTH, WINDOW_HEIGHT);
-    net.physics(WINDOW_WIDTH, WINDOW_HEIGHT);
-	ball.collisions(net, WINDOW_WIDTH, WINDOW_HEIGHT);
+	ball.physics();
+    player1.physics();
+    player2.physics();
+    net.physics();
+	ball.collisions(net);
 	return false;
 }
 
