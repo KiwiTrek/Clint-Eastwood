@@ -35,16 +35,26 @@ class Game
 	SDL_Surface* truth = NULL;
 	SDL_Surface* enterToStart = NULL;
 	SDL_Surface* logo = NULL;
+	SDL_Surface* player1Controls = NULL;
+	SDL_Surface* player2Controls = NULL;
+	SDL_Surface* PE2Q = NULL;
 
 	SDL_Texture* texture = NULL;
 	SDL_Texture* textureTruth = NULL;
 	SDL_Texture* textureEnterToStart = NULL;
 	SDL_Texture* textureLogo = NULL;
+	SDL_Texture* tP1C = NULL;
+	SDL_Texture* tP2C = NULL;
+	SDL_Texture* tPE2Q = NULL;
 
 	SDL_Rect titleCard = { 0,200,1,235 };
 	SDL_Rect truthCard = { 100,550,1080,75 };
 	SDL_Rect enterToStartCard = { 540,800,200,75 };
 	SDL_Rect logoCard = { 1205,885,75,75 };
+	SDL_Rect P1CCard = { 0,650,300,300 };
+	SDL_Rect P2CCard = { 980,650,300,300 };
+	SDL_Rect PE2QCard = { 440,900,400,30 };
+
 
 	Mix_Music* introMusic = NULL;
 	Mix_Music* gameMusic = NULL;
@@ -64,10 +74,7 @@ class Game
 	int score2[2] = { 0,0 };
 
 	//Game texts and sound effects
-	bool pointS1 = false;
-	bool pointS2 = false;
-	bool pointS3 = false;
-
+	int points = 0;
 
 	Mix_Chunk* getReady = NULL;
 	Mix_Chunk* playBall = NULL;

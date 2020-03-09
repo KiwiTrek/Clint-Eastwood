@@ -78,11 +78,17 @@ bool Game::Init() {
 	truth = IMG_Load("Resources/Truth.png");
 	enterToStart = IMG_Load("Resources/EnterToStart.png");
 	logo = IMG_Load("Resources/logo.png");
+	player1Controls = IMG_Load("Resources/Player1Controls.png");
+	player2Controls = IMG_Load("Resources/Player2Controls.png");
+	PE2Q = IMG_Load("Resources/PressEscToQuit.png");
 
 	texture = SDL_CreateTextureFromSurface(renderer, title);
 	textureTruth = SDL_CreateTextureFromSurface(renderer, truth);
 	textureEnterToStart = SDL_CreateTextureFromSurface(renderer, enterToStart);
 	textureLogo = SDL_CreateTextureFromSurface(renderer, logo);
+	tP1C = SDL_CreateTextureFromSurface(renderer, player1Controls);
+	tP2C = SDL_CreateTextureFromSurface(renderer, player2Controls);
+	tPE2Q = SDL_CreateTextureFromSurface(renderer, PE2Q);
 
 	//Game
 
@@ -265,7 +271,7 @@ bool Game::introScreen() {
 	//Animation, I guess (And music, too :/)
 	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 1);
 	introMusic = Mix_LoadMUS("Resources/Intro.wav");
-	Mix_PlayMusic(introMusic, -1);
+	Mix_PlayMusic(introMusic, 0);
 	
 	for (int i = 0; i < WINDOW_WIDTH; i++)
 	{
@@ -285,7 +291,9 @@ bool Game::introScreen() {
 	SDL_Delay(700);
 	SDL_RenderCopy(renderer, textureTruth, NULL, &truthCard);
 	SDL_RenderCopy(renderer, textureLogo, NULL, &logoCard);
-	SDL_RenderPresent(renderer);
+	SDL_RenderCopy(renderer, tP1C, NULL, &P1CCard);
+	SDL_RenderCopy(renderer, tP2C, NULL, &P2CCard);
+	SDL_RenderCopy(renderer, tPE2Q, NULL, &PE2QCard);
 	SDL_RenderCopy(renderer, textureEnterToStart, NULL, &enterToStartCard);
 	SDL_RenderPresent(renderer);
 
@@ -315,7 +323,7 @@ void Game::Scoreboard()
 	
 	if (ball.getY() >=  + WINDOW_HEIGHT * 3 / 4 - ball.getHeight())
 	{
-		pointS1 = true;
+		points = 1;
 
 
 		//Point for player1
@@ -364,18 +372,22 @@ bool Game::winCondition()
 
 	if (trueScore1 >= 11 && trueScore1 - trueScore2 > 1)
 	{
-		pointS1 = false;
+		points = 0;
 		SDL_RenderCopy(renderer, tGame, NULL, &multiCard);
 		SDL_RenderCopy(renderer, tP1Wins, NULL, &playerWins);
+		game = Mix_LoadWAV("Resources/announcer_game.wav");
+		Mix_PlayChannel(-1, game, 0);
 		SDL_RenderPresent(renderer);
 		SDL_Delay(2000);
 		return true;
 	}
 	if (trueScore2 >= 11 && trueScore2 - trueScore1 > 1)
 	{
-		pointS1 = false;
+		points = 0;
 		SDL_RenderCopy(renderer, tGame, NULL, &multiCard);
 		SDL_RenderCopy(renderer, tP2Wins, NULL, &playerWins);
+		game = Mix_LoadWAV("Resources/announcer_game.wav");
+		Mix_PlayChannel(-1, game, 0);
 		SDL_RenderPresent(renderer);
 		SDL_Delay(2000);
 		return true;
@@ -495,38 +507,48 @@ void Game::Render()
 
 	win = winCondition();
 
-	if (pointS3)
+	if (points == 3)
 	{
 		ball.setX(WINDOW_WIDTH / 2 -ball.getWidth()/2);
 		ball.setY(200);
+		player1.setX(WINDOW_WIDTH / 4);
+		player2.setX((WINDOW_WIDTH * 3 / 4) - player2.getWidth());
+		player1.setY((WINDOW_HEIGHT * 3 / 4) - player1.getHeight());
+		player2.setY((WINDOW_HEIGHT * 3 / 4) - player2.getHeight());
 		SDL_RenderCopy(renderer, tPlayBall, NULL, &multiCard);
 		playBall = Mix_LoadWAV("Resources/announcer_play_ball.wav");
 		Mix_PlayChannel(-1, playBall, 0);
 		SDL_RenderPresent(renderer);
 		SDL_Delay(1300);
-		pointS3 = false;
+		points = 0;
 	}
-	if (pointS2)
+	if (points == 2)
 	{
 		ball.setX(WINDOW_WIDTH / 2 - ball.getWidth()/2);
 		ball.setY(200);
+		player1.setX(WINDOW_WIDTH / 4);
+		player2.setX((WINDOW_WIDTH * 3 / 4) - player2.getWidth());
+		player1.setY((WINDOW_HEIGHT * 3 / 4) - player1.getHeight());
+		player2.setY((WINDOW_HEIGHT * 3 / 4) - player2.getHeight());
 		SDL_RenderCopy(renderer, tGetReady, NULL, &multiCard);
 		getReady = Mix_LoadWAV("Resources/announcer_get_ready.wav");
 		Mix_PlayChannel(-1, getReady, 0);
 		SDL_RenderPresent(renderer);
 		SDL_Delay(1200);
-		pointS2 = false;
-		pointS3 = true;
+		points++;
 	}
-	if (pointS1)
+	if (points == 1)
 	{
 		ball.setX(WINDOW_WIDTH / 2 - ball.getWidth()/2);
 		ball.setY(200);
+		player1.setX(WINDOW_WIDTH / 4);
+		player2.setX((WINDOW_WIDTH * 3 / 4) - player2.getWidth());
+		player1.setY((WINDOW_HEIGHT * 3 / 4) - player1.getHeight());
+		player2.setY((WINDOW_HEIGHT * 3 / 4) - player2.getHeight());
 		SDL_RenderCopy(renderer, tPoint, NULL, &multiCard);
 		SDL_RenderPresent(renderer);
 		SDL_Delay(1000);
-		pointS1 = false;
-		pointS2 = true;
+		points++;
 	}		
 
 	SDL_RenderPresent(renderer);
