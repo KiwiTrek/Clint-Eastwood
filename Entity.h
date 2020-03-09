@@ -27,8 +27,8 @@ public:
 	void physics();
 	void collisions(Entity& e);
 	float sqrt(float X);
-	float ballCenterX();
-	float ballCenterY();
+	float CenterX();
+	float CenterY();
     double weight();
 
 	void getRect(int* x, int* y, int* width, int* height);

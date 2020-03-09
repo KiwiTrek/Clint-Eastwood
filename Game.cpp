@@ -101,14 +101,14 @@ bool Game::Init() {
 	player1.setHeight(200);
 	player1.setX(WINDOW_WIDTH / 4);
 	player1.setY((WINDOW_HEIGHT * 3) / 4 - player1.getHeight());
-	player1.setWidth(100);
+	player1.setWidth(200);
 	player1.setID(ID_PLAYER);
 	player1sur = IMG_Load("Resources/Sprites/Player1.png");
 	player1txt = SDL_CreateTextureFromSurface(renderer, player1sur);
 	setAnim(player1animations);
 
 		//Player2
-	player2.setWidth(100);
+	player2.setWidth(200);
 	player2.setHeight(200);
 	player2.setX((WINDOW_WIDTH * 3) / 4 - player2.getWidth());
 	player2.setY((WINDOW_HEIGHT * 3) / 4 - player2.getHeight());
@@ -297,13 +297,15 @@ bool Game::Update()
 	if (!Input())	return true;
 
 	//Process Input
+    player1.setSpeedX(0);
+    player2.setSpeedX(0);
 	if (keys[SDL_SCANCODE_ESCAPE] == KEY_DOWN)	return true;
 	if (keys[SDL_SCANCODE_A] == KEY_REPEAT) {
-        player1.setSpeedX(-50);
+        player1.setSpeedX(-150);
 		player1.setAnimationState(1);
 	}
 	if (keys[SDL_SCANCODE_D] == KEY_REPEAT) {
-        player1.setSpeedX(50);
+        player1.setSpeedX(200);
 		player1.setAnimationState(2);
 	}
 	if (keys[SDL_SCANCODE_W] == KEY_DOWN) {
@@ -312,11 +314,11 @@ bool Game::Update()
 	}
 	
 	if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
-        player2.setSpeedX(-50);
+        player2.setSpeedX(-150);
 		player2.setAnimationState(1);
 	}
 	if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
-        player2.setSpeedX(50);
+        player2.setSpeedX(200);
 		player2.setAnimationState(2);
 	}
 	if (keys[SDL_SCANCODE_UP] == KEY_DOWN) {
@@ -461,6 +463,10 @@ bool Game::Logic() {
     player2.physics();
     net.physics();
 	ball.collisions(net);
+    ball.collisions(player1);
+    ball.collisions(player2);
+    player1.collisions(net);
+    player2.collisions(net);
 	return false;
 }
 
