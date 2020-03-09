@@ -31,8 +31,6 @@ public:
 	float ballCenterY();
     double weight();
 
-	void movement(int dx, int dy, bool isJumping);
-	bool isJumping = false;
 	void getRect(int* x, int* y, int* width, int* height);
 
 private:

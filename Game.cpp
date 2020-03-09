@@ -297,33 +297,30 @@ bool Game::Update()
 	if (!Input())	return true;
 
 	//Process Input
-	int fx1 = 0, fy1 = 0, fx2 = 0, fy2 = 0;
 	if (keys[SDL_SCANCODE_ESCAPE] == KEY_DOWN)	return true;
 	if (keys[SDL_SCANCODE_A] == KEY_REPEAT) {
-		fx1 -= 20;
+        player1.setSpeedX(-50);
 		player1.setAnimationState(1);
 	}
 	if (keys[SDL_SCANCODE_D] == KEY_REPEAT) {
-		fx1 += 20;
+        player1.setSpeedX(50);
 		player1.setAnimationState(2);
 	}
 	if (keys[SDL_SCANCODE_W] == KEY_DOWN) {
-        fy1--;
-		player1.isJumping = true;
+        player1.setSpeedY(-400);
 		player1.setAnimationState(3);
 	}
 	
 	if (keys[SDL_SCANCODE_LEFT] == KEY_REPEAT) {
-		fx2 -= 20;
+        player2.setSpeedX(-50);
 		player2.setAnimationState(1);
 	}
 	if (keys[SDL_SCANCODE_RIGHT] == KEY_REPEAT) {
-		fx2 += 20;
+        player2.setSpeedX(50);
 		player2.setAnimationState(2);
 	}
 	if (keys[SDL_SCANCODE_UP] == KEY_DOWN) {
-        fy2--;
-		player2.isJumping = true;
+        player2.setSpeedY(-400);
 		player2.setAnimationState(3);
 	}
 
@@ -337,9 +334,6 @@ bool Game::Update()
 		Mix_FreeChunk(ohYes);
 		intro = false;
 	}
-
-	player1.movement(fx1, fy1, player1.isJumping);
-    player2.movement(fx2, fy2, player2.isJumping);
 
 	return false;
 }

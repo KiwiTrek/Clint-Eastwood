@@ -93,27 +93,31 @@ void Entity::collisions(Entity& e) {					                    	// IF THERE ARE CO
 	int y2 = getY();
 	int vx2 = e.getSpeedX();
 	int vy2 = e.getSpeedY();
-	float incrementX = ballCenterX() - (x2 + getWidth()/2);
-	float incrementY = ballCenterY() - (y2 + getHeight()/2);
+	float incrementX = (x2 + e.getWidth()/2) - ballCenterX();
+	float incrementY = (y2 + e.getHeight()/2) - ballCenterY();
 	bool isXP = (incrementX > 0) ? true : false;
 	bool isYP = (incrementY > 0) ? true : false;
 	bool isVXP = ((vx1 - vx2) > 0) ? true : false;
 	bool isVYP = ((vy1 - vy2) > 0) ? true : false;
 
 	if (sqrt(incrementX * incrementX + incrementY * incrementY) <= (getWidth()/4 + e.getWidth()/4)) {
-		if (isXP == false && isYP == false) {
-            if (!(vx1 < 0 && vx2 > 0)) {
-//                setSpeedX( vx1 > 0 ? -vx1 / ballWeight(i) : vx1 * ballWeight(i));
-//                e.setSpeedX( vx2 > 0 ? vx2 * ballWeight(j) : -vx2 / ballWeight(j));
+		if (isXP == false) {
+            if (!(vx1 > 0 && vx2 < 0)) {
+                setSpeedX(vx1 < 0 ? -vx1 / weight() : vx1 * weight());
+                e.setSpeedY(vx2 < 0 ? vx2 * e.weight() : -vx2 / e.weight());
             }
 		}
-		else if(isXP == false && isYP == true) {
+		else if(isXP == true) {
+            if (!(vx1 < 0 && vx2 > 0)) {
+                setSpeedX(vx1 > 0 ? -vx1 / weight() : vx1 * weight());
+                e.setSpeedX(vx2 > 0 ? vx2 * e.weight() : -vx2 / e.weight());
+            }
+		}
+
+		if (isYP == false) {
 
 		}
-		else if (isXP == true && isYP == false) {
-
-		}
-		else {//both are true
+		else if(isYP == true) {
 
 		}
 	}
@@ -128,16 +132,6 @@ void Entity::collisions(Entity& e) {					                    	// IF THERE ARE CO
 	else if (ID1 == 0 && ID2 == 2) {																	//If the first entity is a player and the second is a net
 
 	}
-}
-
-void Entity::movement(int dx, int dy, bool isJumping) {
-	if (isJumping == true) {
-		isJumping = false;
-		//setSpeedY(200);																					//SERGI MODIFY THIS!!!!!!!!!!!!!!!!!!!!!!!
-        //y -= dy * getSpeedY();
-	}
-    x += dx * getSpeedX() / 6;
-    y += dy * getSpeedY() / 6;
 }
 
 void Entity::getRect(int* x, int* y, int* width, int* height) {
