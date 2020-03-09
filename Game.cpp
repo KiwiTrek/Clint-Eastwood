@@ -103,9 +103,19 @@ bool Game::Init() {
 	player1.setY((WINDOW_HEIGHT * 3) / 4 - player1.getHeight());
 	player1.setWidth(100);
 	player1.setID(ID_PLAYER);
-	player1sur = IMG_Load("Resources/Sprites/Player1.png");
-	player1txt = SDL_CreateTextureFromSurface(renderer, player1sur);
-	setAnim(player1animations);
+
+	player1surIdle = IMG_Load("Resources/Sprites/Player1Idle.png");
+	player1txtIdle = SDL_CreateTextureFromSurface(renderer, player1surIdle);
+
+	player1surJump = IMG_Load("Resources/Sprites/Player1Jump.png");
+	player1txtJump = SDL_CreateTextureFromSurface(renderer, player1surJump);
+
+	player1surLeft = IMG_Load("Resources/Sprites/Player1Left.png");
+	player1txtLeft = SDL_CreateTextureFromSurface(renderer, player1surLeft);
+
+	player1surRight = IMG_Load("Resources/Sprites/Player1Right.png");
+	player1txtRight = SDL_CreateTextureFromSurface(renderer, player1surRight);
+
 
 		//Player2
 	player2.setWidth(100);
@@ -113,9 +123,19 @@ bool Game::Init() {
 	player2.setX((WINDOW_WIDTH * 3) / 4 - player2.getWidth());
 	player2.setY((WINDOW_HEIGHT * 3) / 4 - player2.getHeight());
 	player2.setID(ID_PLAYER);
-	player2sur = IMG_Load("Resources/Sprites/Player2.png");
-	player2txt = SDL_CreateTextureFromSurface(renderer, player2sur);
-	setAnim(player2animations);
+
+	player2surIdle = IMG_Load("Resources/Sprites/Player2Idle.png");
+	player2txtIdle = SDL_CreateTextureFromSurface(renderer, player2surIdle);
+
+	player2surJump = IMG_Load("Resources/Sprites/Player2Jump.png");
+	player2txtJump = SDL_CreateTextureFromSurface(renderer, player2surJump);
+
+	player2surLeft = IMG_Load("Resources/Sprites/Player2Left.png");
+	player2txtLeft = SDL_CreateTextureFromSurface(renderer, player2surLeft);
+
+	player2surRight = IMG_Load("Resources/Sprites/Player2Right.png");
+	player2txtRight = SDL_CreateTextureFromSurface(renderer, player2surRight);
+
 
 		//Net
 	net.setWidth(10);
@@ -147,133 +167,6 @@ bool Game::Init() {
 
 	return true;
 }
-void Game::setAnim(SDL_Rect* anim) {
-	//IDLE
-	anim[0].x = 33;
-	anim[0].y = 3;
-	anim[0].w = 62;
-	anim[0].h = 115;
-
-	anim[1].x = 114;
-	anim[1].y = 3;
-	anim[1].w = 62;
-	anim[1].h = 115;
-
-	anim[2].x = 195;
-	anim[2].y = 3;
-	anim[2].w = 62;
-	anim[2].h = 115;
-	
-	anim[3].x = 276;
-	anim[3].y = 3;
-	anim[3].w = 62;
-	anim[3].h = 115;
-
-	anim[4].x = 356;
-	anim[4].y = 3;
-	anim[4].w = 62;
-	anim[4].h = 115;
-
-	anim[5].x = 433;
-	anim[5].y = 3;
-	anim[5].w = 60;
-	anim[5].h = 115;
-
-
-	//RUNNING
-	anim[6].x = 40;
-	anim[6].y = 124;
-	anim[6].w = 60;
-	anim[6].h = 113;
-
-	anim[7].x = 102;
-	anim[7].y = 124;
-	anim[7].w = 73;
-	anim[7].h = 113;
-
-	anim[8].x = 178;
-	anim[8].y = 124;
-	anim[8].w = 81;
-	anim[8].h = 113;
-
-	anim[9].x = 274;
-	anim[9].y = 124;
-	anim[9].w = 64;
-	anim[9].h = 113;
-
-	anim[10].x = 350;
-	anim[10].y = 124;
-	anim[10].w = 66;
-	anim[10].h = 113;
-
-	anim[11].x = 425;
-	anim[11].y = 124;
-	anim[11].w = 71;
-	anim[11].h = 113;
-
-	//JUMPING
-	anim[12].x = 39;
-	anim[12].y = 289;
-	anim[12].w = 63;
-	anim[12].h = 108;
-
-	anim[13].x = 108;
-	anim[13].y = 274;
-	anim[13].w = 57;
-	anim[13].h = 115;
-
-	anim[14].x = 181;
-	anim[14].y = 248;
-	anim[14].w = 72;
-	anim[14].h = 100;
-
-	anim[15].x = 260;
-	anim[15].y = 262;
-	anim[15].w = 74;
-	anim[15].h = 110;
-
-	anim[16].x = 342;
-	anim[16].y = 280;
-	anim[16].w = 68;
-	anim[16].h = 112;
-
-	anim[17].x = 423;
-	anim[17].y = 290;
-	anim[17].w = 63;
-	anim[17].h = 107;
-
-	//QTE
-	anim[18].x = 8;
-	anim[18].y = 408;
-	anim[18].w = 77;
-	anim[18].h = 110;
-
-	anim[19].x = 103;
-	anim[19].y = 408;
-	anim[19].w = 70;
-	anim[19].h = 110;
-
-	anim[20].x = 179;
-	anim[20].y = 408;
-	anim[20].w = 85;
-	anim[20].h = 110;
-
-	//Loss
-	anim[21].x = 276;
-	anim[21].y = 408;
-	anim[21].w = 66;
-	anim[21].h = 103;
-
-	anim[22].x = 366;
-	anim[22].y = 408;
-	anim[22].w = 66;
-	anim[22].h = 103;
-
-	anim[23].x = 449;
-	anim[23].y = 408;
-	anim[23].w = 66;
-	anim[23].h = 103;
-}
 
 bool Game::Input() {
 
@@ -302,7 +195,9 @@ bool Game::Update()
 
 	//Process Input
     player1.setSpeedX(0);
+	if (player1.getY() == (WINDOW_HEIGHT * 3) / 4 - player1.getHeight()) { player1.setAnimationState(0); }
     player2.setSpeedX(0);
+	if (player2.getY() == (WINDOW_HEIGHT * 3) / 4 - player2.getHeight()) { player2.setAnimationState(0); }
 	if (keys[SDL_SCANCODE_ESCAPE] == KEY_DOWN)	return true;
 	if (keys[SDL_SCANCODE_A] == KEY_REPEAT) {
         player1.setSpeedX(-150);
@@ -312,7 +207,7 @@ bool Game::Update()
         player1.setSpeedX(200);
 		player1.setAnimationState(2);
 	}
-	if (keys[SDL_SCANCODE_W] == KEY_DOWN) {
+	if (keys[SDL_SCANCODE_W] == KEY_DOWN && player1.getY() == (WINDOW_HEIGHT * 3) / 4 - player1.getHeight()) {
         player1.setSpeedY(-400);
 		player1.setAnimationState(3);
 	}
@@ -325,7 +220,7 @@ bool Game::Update()
         player2.setSpeedX(200);
 		player2.setAnimationState(2);
 	}
-	if (keys[SDL_SCANCODE_UP] == KEY_DOWN) {
+	if (keys[SDL_SCANCODE_UP] == KEY_DOWN && player2.getY() == (WINDOW_HEIGHT * 3) / 4 - player2.getHeight()) {
         player2.setSpeedY(-400);
 		player2.setAnimationState(3);
 	}
@@ -338,6 +233,8 @@ bool Game::Update()
 		Mix_PlayChannel(-1, ohYes, 0);
 		SDL_Delay(3000);
 		Mix_FreeChunk(ohYes);
+		gameMusic = Mix_LoadMUS("Resources/DeathByGlamour.ogg");
+		Mix_PlayMusic(gameMusic, -1);
 		intro = false;
 	}
 
@@ -368,7 +265,7 @@ bool Game::introScreen() {
 	//Animation, I guess (And music, too :/)
 	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 1);
 	introMusic = Mix_LoadMUS("Resources/Intro.wav");
-	Mix_PlayMusic(introMusic, 1);
+	Mix_PlayMusic(introMusic, -1);
 	
 	for (int i = 0; i < WINDOW_WIDTH; i++)
 	{
@@ -391,9 +288,6 @@ bool Game::introScreen() {
 	SDL_RenderPresent(renderer);
 	SDL_RenderCopy(renderer, textureEnterToStart, NULL, &enterToStartCard);
 	SDL_RenderPresent(renderer);
-
-	gameMusic = Mix_LoadMUS("Resources/GameM.wav");
-	Mix_PlayMusic(gameMusic, -1);
 
 	return true;
 }
@@ -526,12 +420,42 @@ void Game::Render()
 	//Player1
 	SDL_Rect player1rect;
 	player1.getRect(&player1rect.x, &player1rect.y, &player1rect.w, &player1rect.h);
-	SDL_RenderCopy(renderer, player1txt, &player1animations[0] ,&player1rect);
+	switch (player1.getAnimationState()) {
+	case 0:
+		SDL_RenderCopy(renderer, player1txtIdle, NULL, &player1rect);
+		break;
+	case 1:
+		SDL_RenderCopy(renderer, player1txtLeft, NULL, &player1rect);
+		break;
+	case 2:
+		SDL_RenderCopy(renderer, player1txtRight, NULL, &player1rect);
+		break;
+	case 3:
+		SDL_RenderCopy(renderer, player1txtJump, NULL, &player1rect);
+		break;
+	default:
+		break;
+	}
 
 	//Player2
 	SDL_Rect player2rect;
 	player2.getRect(&player2rect.x, &player2rect.y, &player2rect.w, &player2rect.h);
-	SDL_RenderCopy(renderer, player2txt, &player2animations[0], &player2rect);
+	switch (player2.getAnimationState()) {
+	case 0:
+		SDL_RenderCopy(renderer, player2txtIdle, NULL, &player2rect);
+		break;
+	case 1:
+		SDL_RenderCopy(renderer, player2txtLeft, NULL, &player2rect);
+		break;
+	case 2:
+		SDL_RenderCopy(renderer, player2txtRight, NULL, &player2rect);
+		break;
+	case 3:
+		SDL_RenderCopy(renderer, player2txtJump, NULL, &player2rect);
+		break;
+	default:
+		break;
+	}
 
 	//Scoreboard
 	//Player 1

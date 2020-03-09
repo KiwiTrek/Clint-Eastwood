@@ -97,12 +97,31 @@ class Game
 	SDL_Texture* ballTxt;
 
 	Entity player1;
-	SDL_Surface* player1sur;
-	SDL_Texture* player1txt;
+	SDL_Surface* player1surIdle;
+	SDL_Texture* player1txtIdle;
+
+	SDL_Surface* player1surJump;
+	SDL_Texture* player1txtJump;
+
+	SDL_Surface* player1surLeft;
+	SDL_Texture* player1txtLeft;
+
+	SDL_Surface* player1surRight;
+	SDL_Texture* player1txtRight;
+
 
 	Entity player2;
-	SDL_Surface* player2sur;
-	SDL_Texture* player2txt;
+	SDL_Surface* player2surIdle;
+	SDL_Texture* player2txtIdle;
+
+	SDL_Surface* player2surJump;
+	SDL_Texture* player2txtJump;
+
+	SDL_Surface* player2surLeft;
+	SDL_Texture* player2txtLeft;
+
+	SDL_Surface* player2surRight;
+	SDL_Texture* player2txtRight;
 
 	Entity net;
 	SDL_Surface* netSur;
@@ -139,7 +158,6 @@ public:
 						//Para probar Logic sobretodo movimiento, haced "SDL_RenderSetDrawColor" y "SDL_RenderFillRect" para los placeholders.
 						//Las rects que solo servirán para renderizar, dentro del render mismo
 	bool Update();
-	void setAnim(SDL_Rect* anim);
 	//Incluso si son de otras clases, todo se debería de hacer aquí
 	//Sí no queréis llenar el código de mucho, siempre se puede crear una función para la clase e invocarla en el Logic/Render
 	//Pero al final el loop son el Input, el Logic y el Render (en ese orden)

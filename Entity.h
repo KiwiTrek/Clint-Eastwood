@@ -48,7 +48,5 @@ private:
 	1 = MOVING_LEFT
 	2 = MOVING_RIGHT
 	3 = JUMPING
-	4 = QTE
-	5 = LOSS
 	*/
 };
