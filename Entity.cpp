@@ -49,10 +49,10 @@ float Entity::CenterY() {
 double Entity::weight() {
     int id = getID();
     if (id == 0) { //player
-        return 10;
+        return 5;
     }
     else if (id == 1) { //ball
-        return 1.125;
+        return 1.25;
     }
     else if (id == 2) { //net
         return 0.0625;
@@ -89,10 +89,15 @@ void Entity::collisions(Entity& e) {					                    	// IF THERE ARE CO
 	int y1 = getY();
 	int vx1 = getSpeedX();
 	int vy1 = getSpeedY();
-	int x2 = getX();
-	int y2 = getY();
+	int w1 = getWidth();
+	int h1 = getHeight();
+	int x2 = e.getX();
+	int y2 = e.getY();
 	int vx2 = e.getSpeedX();
 	int vy2 = e.getSpeedY();
+	int w2 = e.getWidth();
+	int h2 = e.getHeight();
+	int W = weight();
 	float incrementX = (e.CenterX() - CenterX());
 	float incrementY = (e.CenterY() - CenterY());
 	bool isXP = (incrementX > 0) ? true : false;
@@ -103,44 +108,41 @@ void Entity::collisions(Entity& e) {					                    	// IF THERE ARE CO
 
 	if (ID1 == 1 && ID2 == 0) {																			//If the first entity is a ball and the second is a player
         if (sqrt(incrementX * incrementX + incrementY * incrementY) <= 125/*(getWidth()/2 + e.getWidth()/2)*/) {
-            if (isXP == false && !(vx1 > 0 && vx2 < 0)) {
-                setSpeedX(vx1 < 0 ? -vx1 / weight() : vx1 * weight());
-                e.setSpeedY(vx2 < 0 ? vx2 * e.weight() : -vx2 / e.weight());
+			if (isXP == false && !(vx1 > 0 && vx2 < 0)) {
+                setSpeedX(vx1 < 0 ? -vx1 / W : vx1 * W);
+                e.setSpeedX(vx2 < 0 ? vx2 * W : -vx2 / W);
             }
             else if (isXP == true && !(vx1 < 0 && vx2 > 0)) {
-                setSpeedX(vx1 > 0 ? -vx1 / weight() : vx1 * weight());
-                e.setSpeedX(vx2 > 0 ? vx2 * e.weight() : -vx2 / e.weight());
+                setSpeedX(vx1 > 0 ? -vx1 / W : vx1 * W);
+                e.setSpeedX(vx2 > 0 ? vx2 * W : -vx2 / W);
             }
             if (isYP == false && !(vy1 > 0 && vy2 < 0)) {
-                setSpeedY(vy1 < 0 ? vy1 * weight() : -vy1 / weight());
-                e.setSpeedY(vy2 < 0 ? -vy2 / weight() : vy2 * weight());
+                setSpeedY(vy1 < 0 ? vy1 * W : -vy1 / W);
+                e.setSpeedY(vy2 < 0 ? -vy2 / W : vy2 * W);
             }
             else if (isYP == true && !(vy1 < 0 && vy2 > 0)) {
-                setSpeedY(vy1 > 0 ? -vy1 / weight() : vy1 * weight());
-                e.setSpeedY(vy2 > 0 ? vy2 * weight() : -vy2 / weight());
+                setSpeedY(vy1 > 0 ? -vy1 / W : vy1 * W);
+                e.setSpeedY(vy2 > 0 ? vy2 * W : -vy2 / W);
             }
         }
 	}
     else if (ID1 == 1 && ID2 == 2) {																	//If the first entity is a ball and the second is a net
-        if ((CenterX() + 25 - e.getX()) <= -100 && (CenterX() + 25 - e.getX()) >= 0) {
-            setSpeedX(vx1 < 0 ? -vx1 / weight() : vx1 * weight());
-            e.setSpeedY(vx2 < 0 ? vx2 * e.weight() : -vx2 / e.weight());
-        }
-        else if ((CenterX() + 25 - e.getX()) >= 0 && (CenterX() + 25 - e.getX()) <= 100) {
-                setSpeedX(vx1 > 0 ? -vx1 / weight() : vx1 * weight());
-                e.setSpeedX(vx2 > 0 ? vx2 * e.weight() : -vx2 / e.weight());
-        }
-            //if (isYP == false && !(vy1 > 0 && vy2 < 0)) {
-            //    setSpeedY(vy1 < 0 ? vy1 * weight() : -vy1 / weight());
-            //    e.setSpeedY(vy2 < 0 ? -vy2 / weight() : vy2 * weight());
-            //}
-            //else if (isYP == true && !(vy1 < 0 && vy2 > 0)) {
-            //    setSpeedY(vy1 > 0 ? -vy1 / weight() : vy1 * weight());
-            //    e.setSpeedY(vy2 > 0 ? vy2 * weight() : -vy2 / weight());
-            //}
-        
+		if (isXP == false && x1 <= (x2 + w2) && (y1 + h1) >= y2) {
+			setX(x2 + w2);
+			setSpeedX(vx1 < 0 ? -vx1 / W : vx1 * W);
+		}
+		else if ( isXP == true && (x1 + w1) >= x2 && (y1 + h1) >= y2) {
+			setX(x2 - w1);
+			setSpeedX(vx1 > 0 ? -vx1 / W : vx1 * W);
+		}
     }
     else if (ID1 == 0 && ID2 == 2) {																	//If the first entity is a player and the second is a net
+		if (isXP == false && x1 <= (x2 + w2)) {
+			setX(x2 + w2);
+		}
+		else if (isXP == true && (x1 + w1) >= x2) {
+			setX(x2 - w1);
+		}
     }
 }
 
