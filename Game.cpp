@@ -135,11 +135,15 @@ bool Game::Init() {
 	sPlayBall = IMG_Load("Resources/PlayBall.png");
 	sGame = IMG_Load("Resources/Game.png");
 	sPoint = IMG_Load("Resources/Point.png");
+	sP1Wins = IMG_Load("Resources/Player1Wins.png");
+	sP2Wins = IMG_Load("Resources/Player2Wins.png");
 
 	tGetReady = SDL_CreateTextureFromSurface(renderer, sGetReady);
 	tPlayBall = SDL_CreateTextureFromSurface(renderer, sPlayBall);
 	tGame = SDL_CreateTextureFromSurface(renderer, sGame);
 	tPoint = SDL_CreateTextureFromSurface(renderer, sPoint);
+	tP1Wins = SDL_CreateTextureFromSurface(renderer, sP1Wins);
+	tP2Wins = SDL_CreateTextureFromSurface(renderer, sP2Wins);
 
 	return true;
 }
@@ -388,6 +392,8 @@ bool Game::introScreen() {
 	SDL_RenderCopy(renderer, textureEnterToStart, NULL, &enterToStartCard);
 	SDL_RenderPresent(renderer);
 
+	gameMusic = Mix_LoadMUS("Resources/GameM.wav");
+	Mix_PlayMusic(gameMusic, -1);
 
 	return true;
 }
@@ -456,6 +462,33 @@ void Game::Scoreboard()
 		}	
 	}	
 }
+
+bool Game::winCondition()
+{
+	int trueScore1 = score1[0] * 10 + score1[1];
+	int trueScore2 = score2[0] * 10 + score2[1];
+
+	if (trueScore1 >= 11 && trueScore1 - trueScore2 > 1)
+	{
+		pointS1 = false;
+		SDL_RenderCopy(renderer, tGame, NULL, &multiCard);
+		SDL_RenderCopy(renderer, tP1Wins, NULL, &playerWins);
+		SDL_RenderPresent(renderer);
+		SDL_Delay(2000);
+		return true;
+	}
+	if (trueScore2 >= 11 && trueScore2 - trueScore1 > 1)
+	{
+		pointS1 = false;
+		SDL_RenderCopy(renderer, tGame, NULL, &multiCard);
+		SDL_RenderCopy(renderer, tP2Wins, NULL, &playerWins);
+		SDL_RenderPresent(renderer);
+		SDL_Delay(2000);
+		return true;
+	}
+	return false;
+}
+
 
 bool Game::Logic() {
 	ball.physics();
@@ -535,6 +568,9 @@ void Game::Render()
 	}
 
 	//After getting a point (Part of ball repositioning is also done here, to avoid certain weird shit)
+
+	win = winCondition();
+
 	if (pointS3)
 	{
 		ball.setX(WINDOW_WIDTH / 2 -ball.getWidth()/2);

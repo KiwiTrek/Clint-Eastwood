@@ -16,6 +16,10 @@ int main(int argc, char* argv[]) {
 				game.Logic();			//Hace la lógica del juego
 				game.Scoreboard();      //Hace la scoreboard
 				game.Render(); }		//Hace el render
+			if (game.win)
+			{
+				quit = true;
+			}
 			SDL_Delay(10);
 			
 		}

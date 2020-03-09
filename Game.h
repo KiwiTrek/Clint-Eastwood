@@ -47,6 +47,7 @@ class Game
 	SDL_Rect logoCard = { 1205,885,75,75 };
 
 	Mix_Music* introMusic = NULL;
+	Mix_Music* gameMusic = NULL;
 	Mix_Chunk* ohYes = NULL;
 
 	//Scoreboard
@@ -76,13 +77,18 @@ class Game
 	SDL_Surface* sPlayBall = NULL;
 	SDL_Surface* sGame = NULL;
 	SDL_Surface* sPoint = NULL; //No sfx, yet
+	SDL_Surface* sP1Wins = NULL;
+	SDL_Surface* sP2Wins = NULL;
 
 	SDL_Texture* tGetReady = NULL; 
 	SDL_Texture* tPlayBall = NULL; 
 	SDL_Texture* tGame = NULL;
 	SDL_Texture* tPoint = NULL;
+	SDL_Texture* tP1Wins = NULL;
+	SDL_Texture* tP2Wins = NULL;
 
 	SDL_Rect multiCard = { 590,100,100,50 };
+	SDL_Rect playerWins = { 490,200,300,100 };
 
 	/////////////////////////////////////////////////////////////////////////////
 	//	MAIN GAME
@@ -125,6 +131,9 @@ public:
 	bool Logic();		//Aquí iría todo lo relacionado con la física, la AI, saltos, QTE, etc.
 
 	void Scoreboard();
+
+	bool winCondition();
+	bool win = false;
 
 	void Render();		//Los render copies, los sonidos, las animaciones...
 						//Para probar Logic sobretodo movimiento, haced "SDL_RenderSetDrawColor" y "SDL_RenderFillRect" para los placeholders.
