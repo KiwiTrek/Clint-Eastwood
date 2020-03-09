@@ -93,8 +93,8 @@ bool Game::Init() {
 	//Game
 
 		//Ball
-	ball.setX(WINDOW_WIDTH / 2);
-	ball.setY(100);
+	ball.setX(WINDOW_WIDTH / 2 - ball.getWidth() / 2);
+	ball.setY(200);
 	ball.setWidth(50);
 	ball.setHeight(50);
 	ball.setSpeedX(200);
@@ -297,6 +297,7 @@ bool Game::introScreen() {
 	SDL_RenderCopy(renderer, textureEnterToStart, NULL, &enterToStartCard);
 	SDL_RenderPresent(renderer);
 
+	points = 2;
 	return true;
 }
 
@@ -503,13 +504,16 @@ void Game::Render()
 		}
 	}
 
+
+	SDL_RenderPresent(renderer);
+
 	//After getting a point (Part of ball repositioning is also done here, to avoid certain weird shit)
 
 	win = winCondition();
 
 	if (points == 3)
 	{
-		ball.setX(WINDOW_WIDTH / 2 -ball.getWidth()/2);
+		ball.setX(WINDOW_WIDTH / 2 - ball.getWidth() / 2);
 		ball.setY(200);
 		player1.setX(WINDOW_WIDTH / 4);
 		player2.setX((WINDOW_WIDTH * 3 / 4) - player2.getWidth());
@@ -524,7 +528,7 @@ void Game::Render()
 	}
 	if (points == 2)
 	{
-		ball.setX(WINDOW_WIDTH / 2 - ball.getWidth()/2);
+		ball.setX(WINDOW_WIDTH / 2 - ball.getWidth() / 2);
 		ball.setY(200);
 		player1.setX(WINDOW_WIDTH / 4);
 		player2.setX((WINDOW_WIDTH * 3 / 4) - player2.getWidth());
@@ -539,7 +543,7 @@ void Game::Render()
 	}
 	if (points == 1)
 	{
-		ball.setX(WINDOW_WIDTH / 2 - ball.getWidth()/2);
+		ball.setX(WINDOW_WIDTH / 2 - ball.getWidth() / 2);
 		ball.setY(200);
 		player1.setX(WINDOW_WIDTH / 4);
 		player2.setX((WINDOW_WIDTH * 3 / 4) - player2.getWidth());
@@ -549,9 +553,7 @@ void Game::Render()
 		SDL_RenderPresent(renderer);
 		SDL_Delay(1000);
 		points++;
-	}		
-
-	SDL_RenderPresent(renderer);
+	}
 }
 
 
