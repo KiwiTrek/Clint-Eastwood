@@ -48,15 +48,17 @@ float Entity::CenterY() {
 
 double Entity::weight() {
     int id = getID();
-    if (id == 0) { //player
-        return 5;
-    }
-    else if (id == 1) { //ball
-        return 1.25;
-    }
-    else if (id == 2) { //net
-        return 0.0625;
-    }
+	if (id == 0) { //player
+		return 5;
+	}
+	else if (id == 1) { //ball
+		return 1.25;
+	}
+	else if (id == 2) { //net
+		return 0.0625;
+	}
+	else
+		return 0;
 }
 
 void Entity::physics() {
